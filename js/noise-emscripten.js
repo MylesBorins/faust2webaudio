@@ -899,7 +899,7 @@ function loadMemoryInitializer(filename) {
 }
 // === Body ===
 assert(STATICTOP == STACK_MAX); assert(STACK_MAX == TOTAL_STACK);
-STATICTOP += 892;
+STATICTOP += 900;
 assert(STATICTOP < TOTAL_MEMORY);
 var __ZTVSt9exception;
 var __ZTVN10__cxxabiv120__si_class_type_infoE;
@@ -911,40 +911,40 @@ var __ZN10__cxxabiv120__si_class_type_infoD1Ev;
 var __ZN10__cxxabiv120__si_class_type_infoD2Ev;
 var __ZNSt9bad_allocC1Ev;
 var __ZNSt9bad_allocD1Ev;
-__ZTVN10__cxxabiv120__si_class_type_infoE=allocate([0,0,0,0,64,3,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "i8", ALLOC_STATIC);
-__ZTVN10__cxxabiv117__class_type_infoE=allocate([0,0,0,0,76,3,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "i8", ALLOC_STATIC);
-/* memory initializer */ allocate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,115,116,100,58,58,98,97,100,95,97,108,108,111,99,0,0,86,111,108,117,109,101,0,0,107,110,111,98,0,0,0,0,115,116,121,108,101,0,0,0,110,111,105,115,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,52,3,80,0,46,0,0,0,16,0,0,0,26,0,0,0,0,0,0,0,0,0,0,0,100,3,80,0,8,0,0,0,56,0,0,0,44,0,0,0,30,0,0,0,32,0,0,0,6,0,0,0,24,0,0,0,60,0,0,0,0,0,0,0,0,0,0,0,112,3,80,0,4,0,0,0,20,0,0,0,62,0,0,0,62,0,0,0,62,0,0,0,62,0,0,0,62,0,0,0,0,0,0,0,83,116,57,116,121,112,101,95,105,110,102,111,0,0,0,0,83,116,57,98,97,100,95,97,108,108,111,99,0,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,50,48,95,95,115,105,95,99,108,97,115,115,95,116,121,112,101,95,105,110,102,111,69,0,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,49,55,95,95,99,108,97,115,115,95,116,121,112,101,95,105,110,102,111,69,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,49,54,95,95,115,104,105,109,95,116,121,112,101,95,105,110,102,111,69,0,0,0,0,53,78,111,105,115,101,0,0,51,100,115,112,0,0,0,0,0,0,0,0,140,2,80,0,0,0,0,0,156,2,80,0,0,0,0,0,0,0,0,0,172,2,80,0,76,3,80,0,0,0,0,0,212,2,80,0,88,3,80,0,0,0,0,0,248,2,80,0,44,3,80,0,0,0,0,0,28,3,80,0,112,3,80,0,0,0,0,0,36,3,80,0,0,0,0,0], "i8", ALLOC_NONE, TOTAL_STACK)
+__ZTVN10__cxxabiv120__si_class_type_infoE=allocate([0,0,0,0,72,3,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "i8", ALLOC_STATIC);
+__ZTVN10__cxxabiv117__class_type_infoE=allocate([0,0,0,0,84,3,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "i8", ALLOC_STATIC);
+/* memory initializer */ allocate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,115,116,100,58,58,98,97,100,95,97,108,108,111,99,0,0,86,111,108,117,109,101,0,0,107,110,111,98,0,0,0,0,115,116,121,108,101,0,0,0,110,111,105,115,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,3,80,0,50,0,0,0,16,0,0,0,26,0,0,0,0,0,0,0,0,0,0,0,108,3,80,0,8,0,0,0,60,0,0,0,48,0,0,0,30,0,0,0,32,0,0,0,6,0,0,0,24,0,0,0,42,0,0,0,40,0,0,0,64,0,0,0,0,0,0,0,0,0,0,0,120,3,80,0,4,0,0,0,20,0,0,0,66,0,0,0,66,0,0,0,66,0,0,0,66,0,0,0,66,0,0,0,0,0,0,0,83,116,57,116,121,112,101,95,105,110,102,111,0,0,0,0,83,116,57,98,97,100,95,97,108,108,111,99,0,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,50,48,95,95,115,105,95,99,108,97,115,115,95,116,121,112,101,95,105,110,102,111,69,0,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,49,55,95,95,99,108,97,115,115,95,116,121,112,101,95,105,110,102,111,69,0,0,0,78,49,48,95,95,99,120,120,97,98,105,118,49,49,54,95,95,115,104,105,109,95,116,121,112,101,95,105,110,102,111,69,0,0,0,0,53,78,111,105,115,101,0,0,51,100,115,112,0,0,0,0,0,0,0,0,148,2,80,0,0,0,0,0,164,2,80,0,0,0,0,0,0,0,0,0,180,2,80,0,84,3,80,0,0,0,0,0,220,2,80,0,96,3,80,0,0,0,0,0,0,3,80,0,52,3,80,0,0,0,0,0,36,3,80,0,120,3,80,0,0,0,0,0,44,3,80,0,0,0,0,0], "i8", ALLOC_NONE, TOTAL_STACK)
 function runPostSets() {
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(8))>>2)]=(50);
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(12))>>2)]=(54);
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(16))>>2)]=(42);
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(20))>>2)]=(58);
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(24))>>2)]=(48);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(8))>>2)]=(54);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(12))>>2)]=(58);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(16))>>2)]=(44);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(20))>>2)]=(62);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(24))>>2)]=(36);
 HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(28))>>2)]=(38);
 HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(32))>>2)]=(28);
-HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(36))>>2)]=(64);
+HEAP32[(((__ZTVN10__cxxabiv120__si_class_type_infoE)+(36))>>2)]=(68);
 HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(8))>>2)]=(18);
 HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(12))>>2)]=(22);
-HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(16))>>2)]=(42);
-HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(20))>>2)]=(58);
-HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(24))>>2)]=(48);
+HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(16))>>2)]=(44);
+HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(20))>>2)]=(62);
+HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(24))>>2)]=(36);
 HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(28))>>2)]=(10);
-HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(32))>>2)]=(40);
-HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(36))>>2)]=(52);
-HEAP32[((5243692)>>2)]=(((__ZTVN10__cxxabiv117__class_type_infoE+8)|0));
-HEAP32[((5243700)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
-HEAP32[((5243708)>>2)]=__ZTISt9exception;
-HEAP32[((5243712)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
-HEAP32[((5243724)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
-HEAP32[((5243736)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
-HEAP32[((5243748)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
-HEAP32[((5243760)>>2)]=(((__ZTVN10__cxxabiv117__class_type_infoE+8)|0));
+HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(32))>>2)]=(46);
+HEAP32[(((__ZTVN10__cxxabiv117__class_type_infoE)+(36))>>2)]=(56);
+HEAP32[((5243700)>>2)]=(((__ZTVN10__cxxabiv117__class_type_infoE+8)|0));
+HEAP32[((5243708)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
+HEAP32[((5243716)>>2)]=__ZTISt9exception;
+HEAP32[((5243720)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
+HEAP32[((5243732)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
+HEAP32[((5243744)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
+HEAP32[((5243756)>>2)]=(((__ZTVN10__cxxabiv120__si_class_type_infoE+8)|0));
+HEAP32[((5243768)>>2)]=(((__ZTVN10__cxxabiv117__class_type_infoE+8)|0));
 __ZN10__cxxabiv117__class_type_infoD1Ev = 12;
 __ZN10__cxxabiv117__class_type_infoD2Ev = (34);
 __ZN10__cxxabiv120__si_class_type_infoD1Ev = 2;
 __ZN10__cxxabiv120__si_class_type_infoD2Ev = (12);
 __ZNSt9bad_allocC1Ev = 14;
-__ZNSt9bad_allocD1Ev = 36;
+__ZNSt9bad_allocD1Ev = 52;
 }
 if (!awaitingMemoryInitializer) runPostSets();
   function _memset(ptr, value, num) {
@@ -1646,10 +1646,24 @@ Module["requestFullScreen"] = function(lockPointer, resizeCanvas) { Browser.requ
 var FUNCTION_TABLE = [0,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZN3dspD1Ev,0,__ZN5Noise4initEi,0,__ZN5NoiseD1Ev,0,__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib
 ,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZNSt9bad_allocC2Ev,0,__ZNSt9bad_allocD0Ev,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZN3dspD0Ev
 ,0,__ZN10__cxxabiv117__class_type_infoD0Ev,0,__ZN5Noise7computeEiPPfS1_,0,__ZNKSt9bad_alloc4whatEv,0,__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib,0,__ZN5Noise13getNumOutputsEv
-,0,__ZN5Noise18buildUserInterfaceEP2UI,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZNSt9bad_allocD2Ev,0,__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib,0,__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib
-,0,__ZNK10__cxxabiv116__shim_type_info5noop1Ev,0,__ZN5Noise12getNumInputsEv,0,__ZNSt9bad_allocD2Ev,0,__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv,0,__ZN10__cxxabiv116__shim_type_infoD2Ev
-,0,__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0,__ZN10__cxxabiv120__si_class_type_infoD0Ev,0,__ZN5NoiseD0Ev,0,__ZNK10__cxxabiv116__shim_type_info5noop2Ev,0,__ZN5Noise12instanceInitEi,0,___cxa_pure_virtual,0,__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0];
+,0,__ZN5Noise18buildUserInterfaceEP2UI,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv,0,__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib,0,__ZN5Noise13getOutputRateEi
+,0,__ZN5Noise12getInputRateEi,0,__ZNK10__cxxabiv116__shim_type_info5noop1Ev,0,__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib,0,__ZN5Noise12getNumInputsEv,0,__ZNSt9bad_allocD2Ev
+,0,__ZNSt9bad_allocD2Ev,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0,__ZN10__cxxabiv120__si_class_type_infoD0Ev,0,__ZN5NoiseD0Ev,0,__ZNK10__cxxabiv116__shim_type_info5noop2Ev,0,__ZN5Noise12instanceInitEi,0,___cxa_pure_virtual,0,__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0];
 // EMSCRIPTEN_START_FUNCS
+function _NOISE_getNumInputs($n) {
+  var label = 0;
+  var $n_addr;
+  $n_addr=$n;
+  return 0;
+}
+Module["_NOISE_getNumInputs"] = _NOISE_getNumInputs;
+function __ZN3dspD2Ev($this) {
+  var label = 0;
+  var $this_addr;
+  $this_addr=$this;
+  var $this1=$this_addr;
+  return;
+}
 function __ZN5Noise12getNumInputsEv($this) {
   var label = 0;
   var $this_addr;
@@ -1664,17 +1678,62 @@ function __ZN5Noise13getNumOutputsEv($this) {
   var $this1=$this_addr;
   return 1;
 }
+function __ZN5Noise12getInputRateEi($this, $channel) {
+  var label = 0;
+  label = 2; 
+  while(1) switch(label) {
+    case 2: 
+      var $this_addr;
+      var $channel_addr;
+      var $rate;
+      $this_addr=$this;
+      $channel_addr=$channel;
+      var $this1=$this_addr;
+      var $0=$channel_addr;
+      label = 3; break;
+    case 3: 
+      $rate=-1;
+      label = 4; break;
+    case 4: 
+      var $1=$rate;
+      return $1;
+    default: assert(0, "bad label: " + label);
+  }
+}
+function __ZN5Noise13getOutputRateEi($this, $channel) {
+  var label = 0;
+  label = 2; 
+  while(1) switch(label) {
+    case 2: 
+      var $this_addr;
+      var $channel_addr;
+      var $rate;
+      $this_addr=$this;
+      $channel_addr=$channel;
+      var $this1=$this_addr;
+      var $0=$channel_addr;
+      if ((($0)|(0))==0) {
+        label = 3; break;
+      }
+      else {
+      label = 4; break;
+      }
+    case 3: 
+      $rate=1;
+      label = 5; break;
+    case 4: 
+      $rate=-1;
+      label = 5; break;
+    case 5: 
+      var $1=$rate;
+      return $1;
+    default: assert(0, "bad label: " + label);
+  }
+}
 function __ZN5Noise9classInitEi($samplingFreq) {
   var label = 0;
   var $samplingFreq_addr;
   $samplingFreq_addr=$samplingFreq;
-  return;
-}
-function __ZN3dspD2Ev($this) {
-  var label = 0;
-  var $this_addr;
-  $this_addr=$this;
-  var $this1=$this_addr;
   return;
 }
 function __ZNSt9type_infoD2Ev($this) {
@@ -1718,34 +1777,34 @@ function __ZN3dspC2Ev($this) {
   $this_addr=$this;
   var $this1=$this_addr;
   var $0=$this1;
-  HEAP32[(($0)>>2)]=((5243500)|0);
+  HEAP32[(($0)>>2)]=((5243508)|0);
   return;
 }
-function __ZN5Noise7computeEiPPfS1_($this, $count, $input, $output) {
+function __ZN5Noise7computeEiPPfS1_($this, $count, $inputs, $outputs) {
   var label = 0;
   label = 2; 
   while(1) switch(label) {
     case 2: 
       var $this_addr;
       var $count_addr;
-      var $input_addr;
-      var $output_addr;
-      var $fSlow0;
+      var $inputs_addr;
+      var $outputs_addr;
       var $output0;
+      var $fSlow0;
       var $i;
       $this_addr=$this;
       $count_addr=$count;
-      $input_addr=$input;
-      $output_addr=$output;
+      $inputs_addr=$inputs;
+      $outputs_addr=$outputs;
       var $this1=$this_addr;
-      var $fslider0=(($this1+8)|0);
-      var $0=HEAPF32[(($fslider0)>>2)];
-      var $mul=($0)*(4.656612873077393e-10);
+      var $0=$outputs_addr;
+      var $arrayidx=(($0)|0);
+      var $1=HEAP32[(($arrayidx)>>2)];
+      $output0=$1;
+      var $fvslider0=(($this1+16)|0);
+      var $2=HEAPF32[(($fvslider0)>>2)];
+      var $mul=($2)*(4.656610097519831e-10);
       $fSlow0=$mul;
-      var $1=$output_addr;
-      var $arrayidx=(($1)|0);
-      var $2=HEAP32[(($arrayidx)>>2)];
-      $output0=$2;
       $i=0;
       label = 3; break;
     case 3: 
@@ -1754,16 +1813,16 @@ function __ZN5Noise7computeEiPPfS1_($this, $count, $input, $output) {
       var $cmp=(($3)|(0)) < (($4)|(0));
       if ($cmp) { label = 4; break; } else { label = 6; break; }
     case 4: 
-      var $iRec0=(($this1+12)|0);
+      var $iRec0=(($this1+8)|0);
       var $arrayidx2=(($iRec0+4)|0);
       var $5=HEAP32[(($arrayidx2)>>2)];
       var $mul3=Math.imul($5,1103515245);
       var $add=((($mul3)+(12345))|0);
-      var $iRec04=(($this1+12)|0);
+      var $iRec04=(($this1+8)|0);
       var $arrayidx5=(($iRec04)|0);
       HEAP32[(($arrayidx5)>>2)]=$add;
       var $6=$fSlow0;
-      var $iRec06=(($this1+12)|0);
+      var $iRec06=(($this1+8)|0);
       var $arrayidx7=(($iRec06)|0);
       var $7=HEAP32[(($arrayidx7)>>2)];
       var $conv=(($7)|(0));
@@ -1772,17 +1831,17 @@ function __ZN5Noise7computeEiPPfS1_($this, $count, $input, $output) {
       var $9=$output0;
       var $arrayidx9=(($9+($8<<2))|0);
       HEAPF32[(($arrayidx9)>>2)]=$mul8;
-      var $iRec010=(($this1+12)|0);
+      var $iRec010=(($this1+8)|0);
       var $arrayidx11=(($iRec010)|0);
       var $10=HEAP32[(($arrayidx11)>>2)];
-      var $iRec012=(($this1+12)|0);
+      var $iRec012=(($this1+8)|0);
       var $arrayidx13=(($iRec012+4)|0);
       HEAP32[(($arrayidx13)>>2)]=$10;
       label = 5; break;
     case 5: 
       var $11=$i;
-      var $inc=((($11)+(1))|0);
-      $i=$inc;
+      var $add14=((($11)+(1))|0);
+      $i=$add14;
       label = 3; break;
     case 6: 
       return;
@@ -1804,8 +1863,8 @@ function __ZN5Noise12instanceInitEi($this, $samplingFreq) {
       var $1=$this1;
       var $fSamplingFreq=(($1+4)|0);
       HEAP32[(($fSamplingFreq)>>2)]=$0;
-      var $fslider0=(($this1+8)|0);
-      HEAPF32[(($fslider0)>>2)]=0;
+      var $fvslider0=(($this1+16)|0);
+      HEAPF32[(($fvslider0)>>2)]=0;
       $i=0;
       label = 3; break;
     case 3: 
@@ -1814,14 +1873,14 @@ function __ZN5Noise12instanceInitEi($this, $samplingFreq) {
       if ($cmp) { label = 4; break; } else { label = 6; break; }
     case 4: 
       var $3=$i;
-      var $iRec0=(($this1+12)|0);
+      var $iRec0=(($this1+8)|0);
       var $arrayidx=(($iRec0+($3<<2))|0);
       HEAP32[(($arrayidx)>>2)]=0;
       label = 5; break;
     case 5: 
       var $4=$i;
-      var $inc=((($4)+(1))|0);
-      $i=$inc;
+      var $add=((($4)+(1))|0);
+      $i=$add;
       label = 3; break;
     case 6: 
       return;
@@ -1901,148 +1960,55 @@ function __ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__
     default: assert(0, "bad label: " + label);
   }
 }
-function __ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i($this, $info, $dst_ptr, $current_ptr, $path_below) {
+function __ZN5NoiseC1Ev($this) {
   var label = 0;
-  label = 2; 
-  while(1) switch(label) {
-    case 2: 
-      var $this_addr;
-      var $info_addr;
-      var $dst_ptr_addr;
-      var $current_ptr_addr;
-      var $path_below_addr;
-      $this_addr=$this;
-      $info_addr=$info;
-      $dst_ptr_addr=$dst_ptr;
-      $current_ptr_addr=$current_ptr;
-      $path_below_addr=$path_below;
-      var $this1=$this_addr;
-      var $0=$info_addr;
-      var $found_any_static_type=(($0+53)|0);
-      HEAP8[($found_any_static_type)]=1;
-      var $1=$current_ptr_addr;
-      var $2=$info_addr;
-      var $static_ptr=(($2+4)|0);
-      var $3=HEAP32[(($static_ptr)>>2)];
-      var $cmp=(($1)|(0))==(($3)|(0));
-      if ($cmp) { label = 3; break; } else { label = 18; break; }
-    case 3: 
-      var $4=$info_addr;
-      var $found_our_static_ptr=(($4+52)|0);
-      HEAP8[($found_our_static_ptr)]=1;
-      var $5=$info_addr;
-      var $dst_ptr_leading_to_static_ptr=(($5+16)|0);
-      var $6=HEAP32[(($dst_ptr_leading_to_static_ptr)>>2)];
-      var $cmp2=(($6)|(0))==0;
-      if ($cmp2) { label = 4; break; } else { label = 8; break; }
-    case 4: 
-      var $7=$dst_ptr_addr;
-      var $8=$info_addr;
-      var $dst_ptr_leading_to_static_ptr4=(($8+16)|0);
-      HEAP32[(($dst_ptr_leading_to_static_ptr4)>>2)]=$7;
-      var $9=$path_below_addr;
-      var $10=$info_addr;
-      var $path_dst_ptr_to_static_ptr=(($10+24)|0);
-      HEAP32[(($path_dst_ptr_to_static_ptr)>>2)]=$9;
-      var $11=$info_addr;
-      var $number_to_static_ptr=(($11+36)|0);
-      HEAP32[(($number_to_static_ptr)>>2)]=1;
-      var $12=$info_addr;
-      var $number_of_dst_type=(($12+48)|0);
-      var $13=HEAP32[(($number_of_dst_type)>>2)];
-      var $cmp5=(($13)|(0))==1;
-      if ($cmp5) { label = 5; break; } else { label = 7; break; }
-    case 5: 
-      var $14=$info_addr;
-      var $path_dst_ptr_to_static_ptr6=(($14+24)|0);
-      var $15=HEAP32[(($path_dst_ptr_to_static_ptr6)>>2)];
-      var $cmp7=(($15)|(0))==1;
-      if ($cmp7) { label = 6; break; } else { label = 7; break; }
-    case 6: 
-      var $16=$info_addr;
-      var $search_done=(($16+54)|0);
-      HEAP8[($search_done)]=1;
-      label = 7; break;
-    case 7: 
-      label = 17; break;
-    case 8: 
-      var $17=$info_addr;
-      var $dst_ptr_leading_to_static_ptr9=(($17+16)|0);
-      var $18=HEAP32[(($dst_ptr_leading_to_static_ptr9)>>2)];
-      var $19=$dst_ptr_addr;
-      var $cmp10=(($18)|(0))==(($19)|(0));
-      if ($cmp10) { label = 9; break; } else { label = 15; break; }
-    case 9: 
-      var $20=$info_addr;
-      var $path_dst_ptr_to_static_ptr12=(($20+24)|0);
-      var $21=HEAP32[(($path_dst_ptr_to_static_ptr12)>>2)];
-      var $cmp13=(($21)|(0))==2;
-      if ($cmp13) { label = 10; break; } else { label = 11; break; }
-    case 10: 
-      var $22=$path_below_addr;
-      var $23=$info_addr;
-      var $path_dst_ptr_to_static_ptr15=(($23+24)|0);
-      HEAP32[(($path_dst_ptr_to_static_ptr15)>>2)]=$22;
-      label = 11; break;
-    case 11: 
-      var $24=$info_addr;
-      var $number_of_dst_type17=(($24+48)|0);
-      var $25=HEAP32[(($number_of_dst_type17)>>2)];
-      var $cmp18=(($25)|(0))==1;
-      if ($cmp18) { label = 12; break; } else { label = 14; break; }
-    case 12: 
-      var $26=$info_addr;
-      var $path_dst_ptr_to_static_ptr20=(($26+24)|0);
-      var $27=HEAP32[(($path_dst_ptr_to_static_ptr20)>>2)];
-      var $cmp21=(($27)|(0))==1;
-      if ($cmp21) { label = 13; break; } else { label = 14; break; }
-    case 13: 
-      var $28=$info_addr;
-      var $search_done23=(($28+54)|0);
-      HEAP8[($search_done23)]=1;
-      label = 14; break;
-    case 14: 
-      label = 16; break;
-    case 15: 
-      var $29=$info_addr;
-      var $number_to_static_ptr26=(($29+36)|0);
-      var $30=HEAP32[(($number_to_static_ptr26)>>2)];
-      var $add=((($30)+(1))|0);
-      HEAP32[(($number_to_static_ptr26)>>2)]=$add;
-      var $31=$info_addr;
-      var $search_done27=(($31+54)|0);
-      HEAP8[($search_done27)]=1;
-      label = 16; break;
-    case 16: 
-      label = 17; break;
-    case 17: 
-      label = 18; break;
-    case 18: 
-      return;
-    default: assert(0, "bad label: " + label);
-  }
+  var $this_addr;
+  $this_addr=$this;
+  var $this1=$this_addr;
+  __ZN5NoiseC2Ev($this1);
+  return;
 }
-function _NOISE_constructor() {
+function __ZN5NoiseD1Ev($this) {
+  var label = 0;
+  var $this_addr;
+  $this_addr=$this;
+  var $this1=$this_addr;
+  __ZN5NoiseD2Ev($this1);
+  return;
+}
+function _NOISE_constructor($samplingFreq) {
   var label = 0;
   label = 2; 
   while(1) switch(label) {
     case 2: 
+      var $samplingFreq_addr;
+      var $n;
       var $exn_slot;
       var $ehselector_slot;
+      $samplingFreq_addr=$samplingFreq;
       var $call=__Znwj(20);
       var $0=$call;
       var $1=$0;
       HEAP32[(($1)>>2)]=0; HEAP32[((($1)+(4))>>2)]=0; HEAP32[((($1)+(8))>>2)]=0; HEAP32[((($1)+(12))>>2)]=0; HEAP32[((($1)+(16))>>2)]=0;
       (function() { try { __THREW__ = 0; return __ZN5NoiseC1Ev($0) } catch(e) { if (typeof e != "number") throw e; if (ABORT) throw e; __THREW__ = 1; return null } })();if (!__THREW__) { label = 3; break; } else { label = 4; break; }
     case 3: 
-      var $2=$0;
-      return $2;
+      $n=$0;
+      var $2=$n;
+      var $3=$2;
+      var $vtable=HEAP32[(($3)>>2)];
+      var $vfn=(($vtable+20)|0);
+      var $4=HEAP32[(($vfn)>>2)];
+      var $5=$samplingFreq_addr;
+      FUNCTION_TABLE[$4]($2, $5);
+      var $6=$n;
+      var $7=$6;
+      return $7;
     case 4: 
-      var $3$0 = ___cxa_find_matching_catch(-1, -1); $3$1 = tempRet0;
-      var $4=$3$0;
-      $exn_slot=$4;
-      var $5=$3$1;
-      $ehselector_slot=$5;
+      var $8$0 = ___cxa_find_matching_catch(-1, -1); $8$1 = tempRet0;
+      var $9=$8$0;
+      $exn_slot=$9;
+      var $10=$8$1;
+      $ehselector_slot=$10;
       __ZdlPv($call);
       label = 5; break;
     case 5: 
@@ -2057,14 +2023,6 @@ function _NOISE_constructor() {
   }
 }
 Module["_NOISE_constructor"] = _NOISE_constructor;
-function __ZN5NoiseC1Ev($this) {
-  var label = 0;
-  var $this_addr;
-  $this_addr=$this;
-  var $this1=$this_addr;
-  __ZN5NoiseC2Ev($this1);
-  return;
-}
 function _NOISE_compute($n, $count) {
   var label = 0;
   var $n_addr;
@@ -2087,6 +2045,19 @@ function _NOISE_compute($n, $count) {
   return $6;
 }
 Module["_NOISE_compute"] = _NOISE_compute;
+function _NOISE_getNumOutputs($n) {
+  var label = 0;
+  var $n_addr;
+  $n_addr=$n;
+  var $0=$n_addr;
+  var $1=$0;
+  var $vtable=HEAP32[(($1)>>2)];
+  var $vfn=(($vtable+12)|0);
+  var $2=HEAP32[(($vfn)>>2)];
+  var $call=FUNCTION_TABLE[$2]($0);
+  return $call;
+}
+Module["_NOISE_getNumOutputs"] = _NOISE_getNumOutputs;
 function _NOISE_destructor($n) {
   var label = 0;
   label = 2; 
@@ -2110,6 +2081,15 @@ function _NOISE_destructor($n) {
   }
 }
 Module["_NOISE_destructor"] = _NOISE_destructor;
+function __ZN5NoiseD2Ev($this) {
+  var label = 0;
+  var $this_addr;
+  $this_addr=$this;
+  var $this1=$this_addr;
+  var $0=$this1;
+  __ZN3dspD2Ev($0);
+  return;
+}
 function __ZN5NoiseC2Ev($this) {
   var label = 0;
   var $this_addr;
@@ -2119,14 +2099,6 @@ function __ZN5NoiseC2Ev($this) {
   __ZN3dspC2Ev($0);
   var $1=$this1;
   HEAP32[(($1)>>2)]=((5243456)|0);
-  return;
-}
-function __ZN5NoiseD1Ev($this) {
-  var label = 0;
-  var $this_addr;
-  $this_addr=$this;
-  var $this1=$this_addr;
-  __ZN5NoiseD2Ev($this1);
   return;
 }
 function __ZN5NoiseD0Ev($this) {
@@ -2182,15 +2154,15 @@ function __ZN5Noise18buildUserInterfaceEP2UI($this, $interface) {
   var $vtable2=HEAP32[(($4)>>2)];
   var $vfn3=(($vtable2+52)|0);
   var $5=HEAP32[(($vfn3)>>2)];
-  var $fslider0=(($this1+8)|0);
-  FUNCTION_TABLE[$5]($3, $fslider0, ((5242936)|0), ((5242928)|0));
+  var $fvslider0=(($this1+16)|0);
+  FUNCTION_TABLE[$5]($3, $fvslider0, ((5242936)|0), ((5242928)|0));
   var $6=$interface_addr;
   var $7=$6;
   var $vtable4=HEAP32[(($7)>>2)];
   var $vfn5=(($vtable4+32)|0);
   var $8=HEAP32[(($vfn5)>>2)];
-  var $fslider06=(($this1+8)|0);
-  FUNCTION_TABLE[$8]($6, ((5242920)|0), $fslider06, 0, 0, 1, 0.10000000149011612);
+  var $fvslider06=(($this1+16)|0);
+  FUNCTION_TABLE[$8]($6, ((5242920)|0), $fvslider06, 0, 0, 1, 0.10000000149011612);
   var $9=$interface_addr;
   var $10=$9;
   var $vtable7=HEAP32[(($10)>>2)];
@@ -2210,19 +2182,10 @@ function __ZN5Noise4initEi($this, $samplingFreq) {
   __ZN5Noise9classInitEi($0);
   var $1=$this1;
   var $vtable=HEAP32[(($1)>>2)];
-  var $vfn=(($vtable+28)|0);
+  var $vfn=(($vtable+36)|0);
   var $2=HEAP32[(($vfn)>>2)];
   var $3=$samplingFreq_addr;
   FUNCTION_TABLE[$2]($this1, $3);
-  return;
-}
-function __ZN5NoiseD2Ev($this) {
-  var label = 0;
-  var $this_addr;
-  $this_addr=$this;
-  var $this1=$this_addr;
-  var $0=$this1;
-  __ZN3dspD2Ev($0);
   return;
 }
 function __ZN3dspD1Ev($this) {
@@ -2327,7 +2290,7 @@ function __ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoE
       if ($4) { label = 6; break; } else { label = 5; break; }
     case 5: 
       var $5=$3;
-      var $6=___dynamic_cast($5, 5243736, 5243724, -1);
+      var $6=___dynamic_cast($5, 5243744, 5243732, -1);
       var $7=$6;
       var $8 = $7;label = 7; break;
     case 6: 
@@ -2635,6 +2598,127 @@ function ___dynamic_cast($static_ptr, $static_type, $dst_type, $src2dst_offset) 
       var $40=$dst_ptr;
       STACKTOP = __stackBase__;
       return $40;
+    default: assert(0, "bad label: " + label);
+  }
+}
+function __ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i($this, $info, $dst_ptr, $current_ptr, $path_below) {
+  var label = 0;
+  label = 2; 
+  while(1) switch(label) {
+    case 2: 
+      var $this_addr;
+      var $info_addr;
+      var $dst_ptr_addr;
+      var $current_ptr_addr;
+      var $path_below_addr;
+      $this_addr=$this;
+      $info_addr=$info;
+      $dst_ptr_addr=$dst_ptr;
+      $current_ptr_addr=$current_ptr;
+      $path_below_addr=$path_below;
+      var $this1=$this_addr;
+      var $0=$info_addr;
+      var $found_any_static_type=(($0+53)|0);
+      HEAP8[($found_any_static_type)]=1;
+      var $1=$current_ptr_addr;
+      var $2=$info_addr;
+      var $static_ptr=(($2+4)|0);
+      var $3=HEAP32[(($static_ptr)>>2)];
+      var $cmp=(($1)|(0))==(($3)|(0));
+      if ($cmp) { label = 3; break; } else { label = 18; break; }
+    case 3: 
+      var $4=$info_addr;
+      var $found_our_static_ptr=(($4+52)|0);
+      HEAP8[($found_our_static_ptr)]=1;
+      var $5=$info_addr;
+      var $dst_ptr_leading_to_static_ptr=(($5+16)|0);
+      var $6=HEAP32[(($dst_ptr_leading_to_static_ptr)>>2)];
+      var $cmp2=(($6)|(0))==0;
+      if ($cmp2) { label = 4; break; } else { label = 8; break; }
+    case 4: 
+      var $7=$dst_ptr_addr;
+      var $8=$info_addr;
+      var $dst_ptr_leading_to_static_ptr4=(($8+16)|0);
+      HEAP32[(($dst_ptr_leading_to_static_ptr4)>>2)]=$7;
+      var $9=$path_below_addr;
+      var $10=$info_addr;
+      var $path_dst_ptr_to_static_ptr=(($10+24)|0);
+      HEAP32[(($path_dst_ptr_to_static_ptr)>>2)]=$9;
+      var $11=$info_addr;
+      var $number_to_static_ptr=(($11+36)|0);
+      HEAP32[(($number_to_static_ptr)>>2)]=1;
+      var $12=$info_addr;
+      var $number_of_dst_type=(($12+48)|0);
+      var $13=HEAP32[(($number_of_dst_type)>>2)];
+      var $cmp5=(($13)|(0))==1;
+      if ($cmp5) { label = 5; break; } else { label = 7; break; }
+    case 5: 
+      var $14=$info_addr;
+      var $path_dst_ptr_to_static_ptr6=(($14+24)|0);
+      var $15=HEAP32[(($path_dst_ptr_to_static_ptr6)>>2)];
+      var $cmp7=(($15)|(0))==1;
+      if ($cmp7) { label = 6; break; } else { label = 7; break; }
+    case 6: 
+      var $16=$info_addr;
+      var $search_done=(($16+54)|0);
+      HEAP8[($search_done)]=1;
+      label = 7; break;
+    case 7: 
+      label = 17; break;
+    case 8: 
+      var $17=$info_addr;
+      var $dst_ptr_leading_to_static_ptr9=(($17+16)|0);
+      var $18=HEAP32[(($dst_ptr_leading_to_static_ptr9)>>2)];
+      var $19=$dst_ptr_addr;
+      var $cmp10=(($18)|(0))==(($19)|(0));
+      if ($cmp10) { label = 9; break; } else { label = 15; break; }
+    case 9: 
+      var $20=$info_addr;
+      var $path_dst_ptr_to_static_ptr12=(($20+24)|0);
+      var $21=HEAP32[(($path_dst_ptr_to_static_ptr12)>>2)];
+      var $cmp13=(($21)|(0))==2;
+      if ($cmp13) { label = 10; break; } else { label = 11; break; }
+    case 10: 
+      var $22=$path_below_addr;
+      var $23=$info_addr;
+      var $path_dst_ptr_to_static_ptr15=(($23+24)|0);
+      HEAP32[(($path_dst_ptr_to_static_ptr15)>>2)]=$22;
+      label = 11; break;
+    case 11: 
+      var $24=$info_addr;
+      var $number_of_dst_type17=(($24+48)|0);
+      var $25=HEAP32[(($number_of_dst_type17)>>2)];
+      var $cmp18=(($25)|(0))==1;
+      if ($cmp18) { label = 12; break; } else { label = 14; break; }
+    case 12: 
+      var $26=$info_addr;
+      var $path_dst_ptr_to_static_ptr20=(($26+24)|0);
+      var $27=HEAP32[(($path_dst_ptr_to_static_ptr20)>>2)];
+      var $cmp21=(($27)|(0))==1;
+      if ($cmp21) { label = 13; break; } else { label = 14; break; }
+    case 13: 
+      var $28=$info_addr;
+      var $search_done23=(($28+54)|0);
+      HEAP8[($search_done23)]=1;
+      label = 14; break;
+    case 14: 
+      label = 16; break;
+    case 15: 
+      var $29=$info_addr;
+      var $number_to_static_ptr26=(($29+36)|0);
+      var $30=HEAP32[(($number_to_static_ptr26)>>2)];
+      var $add=((($30)+(1))|0);
+      HEAP32[(($number_to_static_ptr26)>>2)]=$add;
+      var $31=$info_addr;
+      var $search_done27=(($31+54)|0);
+      HEAP8[($search_done27)]=1;
+      label = 16; break;
+    case 16: 
+      label = 17; break;
+    case 17: 
+      label = 18; break;
+    case 18: 
+      return;
     default: assert(0, "bad label: " + label);
   }
 }
@@ -9998,7 +10082,7 @@ function __ZNKSt9bad_alloc4whatEv($this) {
 }
 function __ZSt15get_new_handlerv() {
   var label = 0;
-  var $0=(tempValue=HEAP32[((5243768)>>2)],HEAP32[((5243768)>>2)]=tempValue+0,tempValue);
+  var $0=(tempValue=HEAP32[((5243776)>>2)],HEAP32[((5243776)>>2)]=tempValue+0,tempValue);
   var $1=$0;
   return $1;
 }
@@ -10679,7 +10763,7 @@ function __Znwj($size) {
       var $exception=___cxa_allocate_exception(4);
       var $7=$exception;
       __ZNSt9bad_allocC2Ev($7);
-      (function() { try { __THREW__ = 0; return ___cxa_throw($exception, 5243700, (46)) } catch(e) { if (typeof e != "number") throw e; if (ABORT) throw e; __THREW__ = 1; return null } })();if (!__THREW__) { label = 16; break; } else { label = 9; break; }
+      (function() { try { __THREW__ = 0; return ___cxa_throw($exception, 5243708, (50)) } catch(e) { if (typeof e != "number") throw e; if (ABORT) throw e; __THREW__ = 1; return null } })();if (!__THREW__) { label = 16; break; } else { label = 9; break; }
     case 13: 
       label = 5; break;
     case 14: 
@@ -10811,20 +10895,33 @@ run();
 var faust = faust || {};
 
 (function() {
-    var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', []);
+    
+    faust.context = new webkitAudioContext();
+    
+    var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
     var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
     var NOISE_compute = Module.cwrap('NOISE_compute', ['number'], ['number', 'number']);
+    var NOISE_getNumInputs = Module.cwrap('NOISE_getNumInputs', 'number', []);
+    var NOISE_getNumOutputs = Module.cwrap('NOISE_getNumOutputs', 'number', []);
     
     faust.noise = function () {
         that = {};
         
-        that.ptr = NOISE_constructor();
+        that.ptr = NOISE_constructor(faust.context.sampleRate);
         
+        that.getNumInputs = function () {
+            return NOISE_getNumInputs();
+        }
+
+        that.getNumOutputs = function () {
+            return NOISE_getNumOutputs();
+        }
+
         that.compute = function (count) {
             return NOISE_compute(that.ptr, count);
         }
-        
-        that.destory = function () {
+
+        that.destroy = function () {
             NOISE_destructor(that.ptr);
         }
         

@@ -3,20 +3,33 @@
 var faust = faust || {};
 
 (function() {
-    var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', []);
+    
+    faust.context = new webkitAudioContext();
+    
+    var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
     var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
     var NOISE_compute = Module.cwrap('NOISE_compute', ['number'], ['number', 'number']);
+    var NOISE_getNumInputs = Module.cwrap('NOISE_getNumInputs', 'number', []);
+    var NOISE_getNumOutputs = Module.cwrap('NOISE_getNumOutputs', 'number', []);
     
     faust.noise = function () {
         that = {};
         
-        that.ptr = NOISE_constructor();
+        that.ptr = NOISE_constructor(faust.context.sampleRate);
         
+        that.getNumInputs = function () {
+            return NOISE_getNumInputs();
+        }
+
+        that.getNumOutputs = function () {
+            return NOISE_getNumOutputs();
+        }
+
         that.compute = function (count) {
             return NOISE_compute(that.ptr, count);
         }
-        
-        that.destory = function () {
+
+        that.destroy = function () {
             NOISE_destructor(that.ptr);
         }
         
