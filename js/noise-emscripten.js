@@ -1650,13 +1650,6 @@ var FUNCTION_TABLE = [0,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZN3dspD1Ev,
 ,0,__ZN5Noise12getInputRateEi,0,__ZNK10__cxxabiv116__shim_type_info5noop1Ev,0,__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib,0,__ZN5Noise12getNumInputsEv,0,__ZNSt9bad_allocD2Ev
 ,0,__ZNSt9bad_allocD2Ev,0,__ZN10__cxxabiv116__shim_type_infoD2Ev,0,__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0,__ZN10__cxxabiv120__si_class_type_infoD0Ev,0,__ZN5NoiseD0Ev,0,__ZNK10__cxxabiv116__shim_type_info5noop2Ev,0,__ZN5Noise12instanceInitEi,0,___cxa_pure_virtual,0,__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi,0];
 // EMSCRIPTEN_START_FUNCS
-function _NOISE_getNumInputs($n) {
-  var label = 0;
-  var $n_addr;
-  $n_addr=$n;
-  return 0;
-}
-Module["_NOISE_getNumInputs"] = _NOISE_getNumInputs;
 function __ZN3dspD2Ev($this) {
   var label = 0;
   var $this_addr;
@@ -2045,6 +2038,19 @@ function _NOISE_compute($n, $count) {
   return $6;
 }
 Module["_NOISE_compute"] = _NOISE_compute;
+function _NOISE_getNumInputs($n) {
+  var label = 0;
+  var $n_addr;
+  $n_addr=$n;
+  var $0=$n_addr;
+  var $1=$0;
+  var $vtable=HEAP32[(($1)>>2)];
+  var $vfn=(($vtable+8)|0);
+  var $2=HEAP32[(($vfn)>>2)];
+  var $call=FUNCTION_TABLE[$2]($0);
+  return $call;
+}
+Module["_NOISE_getNumInputs"] = _NOISE_getNumInputs;
 function _NOISE_getNumOutputs($n) {
   var label = 0;
   var $n_addr;
@@ -10910,11 +10916,11 @@ var faust = faust || {};
         that.ptr = NOISE_constructor(faust.context.sampleRate);
         
         that.getNumInputs = function () {
-            return NOISE_getNumInputs();
+            return NOISE_getNumInputs(that.ptr);
         }
 
         that.getNumOutputs = function () {
-            return NOISE_getNumOutputs();
+            return NOISE_getNumOutputs(that.ptr);
         }
 
         that.compute = function (count) {

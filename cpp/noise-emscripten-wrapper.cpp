@@ -1,5 +1,6 @@
 // Adapted From https://gist.github.com/camupod/5640386
 //compile using "C" linkage to avoid name obfuscation
+
 extern "C" {
     //constructor
     void *NOISE_constructor(int samplingFreq) {
@@ -18,7 +19,7 @@ extern "C" {
     }
     
     int NOISE_getNumInputs(Noise *n){
-        return 0;
+        return n->getNumInputs();
     }
     
     int NOISE_getNumOutputs(Noise *n){
@@ -29,3 +30,10 @@ extern "C" {
         delete n;
     }
 }
+
+// float** fInChannel;
+// float** fOutChannel;
+
+// Number of channels gotten from getNumInputs / getNumOutputs
+
+// fOutChannel[i] = (float*)ioData->mBuffers[i].mData;

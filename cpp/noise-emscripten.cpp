@@ -193,7 +193,7 @@ struct Meta
 
 class Noise : public dsp {
 	
-  private:
+  public:
 	
 	int iRec0[2];
 	FAUSTFLOAT fvslider0;
@@ -288,6 +288,14 @@ class Noise : public dsp {
 };
 
 
+#ifdef FAUST_UIMACROS
+	#define FAUST_INPUTS 0
+	#define FAUST_OUTPUTS 1
+	#define FAUST_ACTIVES 0
+	#define FAUST_PASSIVES 0
+	FAUST_ADDVERTICALSLIDER("noise/Volume", fvslider0, 0.0f, 0.0f, 1.0f, 0.1f);
+#endif
+
 int main(int argc, char *argv[])
 {
 	Noise DSP;
@@ -297,6 +305,7 @@ int main(int argc, char *argv[])
 #endif
 // Adapted From https://gist.github.com/camupod/5640386
 //compile using "C" linkage to avoid name obfuscation
+
 extern "C" {
     //constructor
     void *NOISE_constructor(int samplingFreq) {
@@ -315,7 +324,7 @@ extern "C" {
     }
     
     int NOISE_getNumInputs(Noise *n){
-        return 0;
+        return n->getNumInputs();
     }
     
     int NOISE_getNumOutputs(Noise *n){
@@ -326,3 +335,10 @@ extern "C" {
         delete n;
     }
 }
+
+// float** fInChannel;
+// float** fOutChannel;
+
+// Number of channels gotten from getNumInputs / getNumOutputs
+
+// fOutChannel[i] = (float*)ioData->mBuffers[i].mData;

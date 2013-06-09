@@ -18,11 +18,11 @@ var faust = faust || {};
         that.ptr = NOISE_constructor(faust.context.sampleRate);
         
         that.getNumInputs = function () {
-            return NOISE_getNumInputs();
+            return NOISE_getNumInputs(that.ptr);
         }
 
         that.getNumOutputs = function () {
-            return NOISE_getNumOutputs();
+            return NOISE_getNumOutputs(that.ptr);
         }
 
         that.compute = function (count) {
