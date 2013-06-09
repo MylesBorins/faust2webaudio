@@ -299,14 +299,13 @@ int main(int argc, char *argv[])
 #endif
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
-
 extern "C" {
     float** fInChannel;
     float** fOutChannel;
     int numInputs;
     int numOutputs;
     //constructor
-    void *NOISE_constructor(int samplingFreq) {
+    void *NOISE_constructor(int samplingFreq, int bufferSize) {
         // Make a new noise object
         Noise* n = new Noise();
         // Init it with samplingFreq supplied... should we give a sample size here too?
@@ -315,35 +314,27 @@ extern "C" {
         // Lets get this once so we don't need to keep calculating every call to compute
         numInputs = n->getNumInputs();
         numOutputs = n->getNumOutputs();
+        
+        // This Needs to be dealt with... curently only able to return a single buffer... rather
+        // Way too mono...
+        // This is due to the Channels not being properly initialized... need to look at how
+        // Other architecture fiels do this a bit better
+        for (int i = 0; i < numInputs; i++) {
+            fInChannel[i] = new float[bufferSize];
+        }
+        
+        for (int i = 0; i < numOutputs; i++) {
+            fOutChannel[i] = new float[bufferSize];
+        }
         return n;
     }
     
-    FAUSTFLOAT NOISE_compute(Noise *n, int count) {
-        
-        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        // THERE IS CURRENTLY A SUPER NASTY MEMORY LEAK HERE
-        // For now just trying to get it to work but
-        // I am creating all these float arrays and
-        // Not dealing with the memory afterwards
-        
-        int numInputs = n->getNumInputs();
-        int numOutputs = n->getNumOutputs();
-        
-        for (int i = 0; i < numInputs; i++) {
-            fInChannel[i] = new float[count];
-        }
-        for (int i = 0; i < numOutputs; i++) {
-            fOutChannel[i] = new float[count];
-        }
-        
+    FAUSTFLOAT *NOISE_compute(Noise *n, int count) {
+                                
         n->compute(count, fInChannel, fOutChannel);
         
-        float temp[count];
-        for (int i; i < count; i++) {
-            temp[i] = fOutChannel[0][i];
-        }
-        
-        return temp[22];
+        // Returning due to problem as mentioend above... 
+        return fOutChannel[0];
     }
     
     int NOISE_getNumInputs(Noise *n){
@@ -355,6 +346,13 @@ extern "C" {
     }
 
     void NOISE_destructor(Noise *n) {
+        for (int i = 0; i < numInputs; i++) {
+            delete fInChannel[i];
+        }
+        
+        for (int i = 0; i < numOutputs; i++) {
+            delete fOutChannel[i];
+        }
         delete n;
     }
 }

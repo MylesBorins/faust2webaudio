@@ -26,7 +26,7 @@ var faust = faust || {};
         }
 
         that.compute = function (count) {
-            return NOISE_compute(that.ptr, count);
+            return faust.ptrToArray(NOISE_compute(that.ptr, count), count);
         }
 
         that.destroy = function () {
@@ -34,6 +34,18 @@ var faust = faust || {};
         }
         
         return that;
+    }
+    
+    /* This is Super duper nasty... THERE HAS TO BE A BETTER WAY TO GO FROM POINTER TO ARRAY */
+    
+    faust.ptrToArray = function(ptr, size) {
+        var a = [];
+        
+        for (var i = 0; i < size*4; i+=4) {
+            a.push(getValue(ptr+i, "float"));
+        }
+        
+        return a;
     }
 }())
 

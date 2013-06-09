@@ -981,20 +981,6 @@ if (!awaitingMemoryInitializer) runPostSets();
       y = y>>>0;
       return tempRet0 = x*y > 4294967295,(x*y)>>>0;
     }
-  function _llvm_stacksave() {
-      var self = _llvm_stacksave;
-      if (!self.LLVM_SAVEDSTACKS) {
-        self.LLVM_SAVEDSTACKS = [];
-      }
-      self.LLVM_SAVEDSTACKS.push(Runtime.stackSave());
-      return self.LLVM_SAVEDSTACKS.length-1;
-    }
-  function _llvm_stackrestore(p) {
-      var self = _llvm_stacksave;
-      var ret = self.LLVM_SAVEDSTACKS[p];
-      self.LLVM_SAVEDSTACKS.splice(p, 1);
-      Runtime.stackRestore(ret);
-    }
   function ___cxa_pure_virtual() {
       ABORT = true;
       throw 'Pure virtual function called!';
@@ -1980,21 +1966,25 @@ function __ZN5NoiseD1Ev($this) {
   __ZN5NoiseD2Ev($this1);
   return;
 }
-function _NOISE_constructor($samplingFreq) {
+function _NOISE_constructor($samplingFreq, $bufferSize) {
   var label = 0;
   label = 2; 
   while(1) switch(label) {
     case 2: 
       var $samplingFreq_addr;
+      var $bufferSize_addr;
       var $n;
       var $exn_slot;
       var $ehselector_slot;
+      var $i;
+      var $i8;
       $samplingFreq_addr=$samplingFreq;
+      $bufferSize_addr=$bufferSize;
       var $call=__Znwj(16);
       var $0=$call;
       var $1=$0;
       HEAP32[(($1)>>2)]=0; HEAP32[((($1)+(4))>>2)]=0; HEAP32[((($1)+(8))>>2)]=0; HEAP32[((($1)+(12))>>2)]=0;
-      (function() { try { __THREW__ = 0; return __ZN5NoiseC1Ev($0) } catch(e) { if (typeof e != "number") throw e; if (ABORT) throw e; __THREW__ = 1; return null } })();if (!__THREW__) { label = 3; break; } else { label = 4; break; }
+      (function() { try { __THREW__ = 0; return __ZN5NoiseC1Ev($0) } catch(e) { if (typeof e != "number") throw e; if (ABORT) throw e; __THREW__ = 1; return null } })();if (!__THREW__) { label = 3; break; } else { label = 7; break; }
     case 3: 
       $n=$0;
       var $2=$n;
@@ -2018,159 +2008,102 @@ function _NOISE_constructor($samplingFreq) {
       var $11=HEAP32[(($vfn5)>>2)];
       var $call6=FUNCTION_TABLE[$11]($9);
       HEAP32[((5242880)>>2)]=$call6;
-      var $12=$n;
-      var $13=$12;
-      return $13;
+      $i=0;
+      label = 4; break;
     case 4: 
-      var $14$0 = ___cxa_find_matching_catch(-1, -1); $14$1 = tempRet0;
-      var $15=$14$0;
-      $exn_slot=$15;
-      var $16=$14$1;
-      $ehselector_slot=$16;
-      __ZdlPv($call);
-      label = 5; break;
+      var $12=$i;
+      var $13=HEAP32[((5242884)>>2)];
+      var $cmp=(($12)|(0)) < (($13)|(0));
+      if ($cmp) { label = 5; break; } else { label = 8; break; }
     case 5: 
+      var $14=$bufferSize_addr;
+      var $15$0=_llvm_umul_with_overflow_i32($14, 4);
+      var $15$1=tempRet0;
+      var $16=$15$1;
+      var $17=$15$0;
+      var $18=$16 ? -1 : $17;
+      var $call7=__Znaj($18);
+      var $19=$call7;
+      var $20=$i;
+      var $21=HEAP32[((5242916)>>2)];
+      var $arrayidx=(($21+($20<<2))|0);
+      HEAP32[(($arrayidx)>>2)]=$19;
+      label = 6; break;
+    case 6: 
+      var $22=$i;
+      var $inc=((($22)+(1))|0);
+      $i=$inc;
+      label = 4; break;
+    case 7: 
+      var $23$0 = ___cxa_find_matching_catch(-1, -1); $23$1 = tempRet0;
+      var $24=$23$0;
+      $exn_slot=$24;
+      var $25=$23$1;
+      $ehselector_slot=$25;
+      __ZdlPv($call);
+      label = 13; break;
+    case 8: 
+      $i8=0;
+      label = 9; break;
+    case 9: 
+      var $26=$i8;
+      var $27=HEAP32[((5242880)>>2)];
+      var $cmp10=(($26)|(0)) < (($27)|(0));
+      if ($cmp10) { label = 10; break; } else { label = 12; break; }
+    case 10: 
+      var $28=$bufferSize_addr;
+      var $29$0=_llvm_umul_with_overflow_i32($28, 4);
+      var $29$1=tempRet0;
+      var $30=$29$1;
+      var $31=$29$0;
+      var $32=$30 ? -1 : $31;
+      var $call12=__Znaj($32);
+      var $33=$call12;
+      var $34=$i8;
+      var $35=HEAP32[((5242912)>>2)];
+      var $arrayidx13=(($35+($34<<2))|0);
+      HEAP32[(($arrayidx13)>>2)]=$33;
+      label = 11; break;
+    case 11: 
+      var $36=$i8;
+      var $inc15=((($36)+(1))|0);
+      $i8=$inc15;
+      label = 9; break;
+    case 12: 
+      var $37=$n;
+      var $38=$37;
+      return $38;
+    case 13: 
       var $exn=$exn_slot;
       var $sel=$ehselector_slot;
       var $lpad_val$0=$exn;
       var $lpad_val$1=0;
-      var $lpad_val7$0=$lpad_val$0;
-      var $lpad_val7$1=$sel;
-      ___resumeException($lpad_val7$0)
+      var $lpad_val17$0=$lpad_val$0;
+      var $lpad_val17$1=$sel;
+      ___resumeException($lpad_val17$0)
     default: assert(0, "bad label: " + label);
   }
 }
 Module["_NOISE_constructor"] = _NOISE_constructor;
 function _NOISE_compute($n, $count) {
   var label = 0;
-  var __stackBase__  = STACKTOP; assert(!(STACKTOP&3)); assert((STACKTOP|0) < (STACK_MAX|0));
-  label = 2; 
-  while(1) switch(label) {
-    case 2: 
-      var $n_addr;
-      var $count_addr;
-      var $numInputs;
-      var $numOutputs;
-      var $i;
-      var $i5;
-      var $saved_stack;
-      var $i16;
-      var $cleanup_dest_slot;
-      $n_addr=$n;
-      $count_addr=$count;
-      var $0=$n_addr;
-      var $1=$0;
-      var $vtable=HEAP32[(($1)>>2)];
-      var $vfn=(($vtable+8)|0);
-      var $2=HEAP32[(($vfn)>>2)];
-      var $call=FUNCTION_TABLE[$2]($0);
-      $numInputs=$call;
-      var $3=$n_addr;
-      var $4=$3;
-      var $vtable1=HEAP32[(($4)>>2)];
-      var $vfn2=(($vtable1+12)|0);
-      var $5=HEAP32[(($vfn2)>>2)];
-      var $call3=FUNCTION_TABLE[$5]($3);
-      $numOutputs=$call3;
-      $i=0;
-      label = 3; break;
-    case 3: 
-      var $6=$i;
-      var $7=$numInputs;
-      var $cmp=(($6)|(0)) < (($7)|(0));
-      if ($cmp) { label = 4; break; } else { label = 6; break; }
-    case 4: 
-      var $8=$count_addr;
-      var $9$0=_llvm_umul_with_overflow_i32($8, 4);
-      var $9$1=tempRet0;
-      var $10=$9$1;
-      var $11=$9$0;
-      var $12=$10 ? -1 : $11;
-      var $call4=__Znaj($12);
-      var $13=$call4;
-      var $14=$i;
-      var $15=HEAP32[((5242916)>>2)];
-      var $arrayidx=(($15+($14<<2))|0);
-      HEAP32[(($arrayidx)>>2)]=$13;
-      label = 5; break;
-    case 5: 
-      var $16=$i;
-      var $inc=((($16)+(1))|0);
-      $i=$inc;
-      label = 3; break;
-    case 6: 
-      $i5=0;
-      label = 7; break;
-    case 7: 
-      var $17=$i5;
-      var $18=$numOutputs;
-      var $cmp7=(($17)|(0)) < (($18)|(0));
-      if ($cmp7) { label = 8; break; } else { label = 10; break; }
-    case 8: 
-      var $19=$count_addr;
-      var $20$0=_llvm_umul_with_overflow_i32($19, 4);
-      var $20$1=tempRet0;
-      var $21=$20$1;
-      var $22=$20$0;
-      var $23=$21 ? -1 : $22;
-      var $call9=__Znaj($23);
-      var $24=$call9;
-      var $25=$i5;
-      var $26=HEAP32[((5242912)>>2)];
-      var $arrayidx10=(($26+($25<<2))|0);
-      HEAP32[(($arrayidx10)>>2)]=$24;
-      label = 9; break;
-    case 9: 
-      var $27=$i5;
-      var $inc12=((($27)+(1))|0);
-      $i5=$inc12;
-      label = 7; break;
-    case 10: 
-      var $28=$n_addr;
-      var $29=$28;
-      var $vtable14=HEAP32[(($29)>>2)];
-      var $vfn15=(($vtable14+24)|0);
-      var $30=HEAP32[(($vfn15)>>2)];
-      var $31=$count_addr;
-      var $32=HEAP32[((5242916)>>2)];
-      var $33=HEAP32[((5242912)>>2)];
-      FUNCTION_TABLE[$30]($28, $31, $32, $33);
-      var $34=$count_addr;
-      var $35=_llvm_stacksave();
-      $saved_stack=$35;
-      var $vla=STACKTOP;STACKTOP = (STACKTOP + ((($34)*(4))&-1))|0;STACKTOP = ((((STACKTOP)+3)>>2)<<2);assert((STACKTOP|0) < (STACK_MAX|0));
-      label = 11; break;
-    case 11: 
-      var $36=$i16;
-      var $37=$count_addr;
-      var $cmp18=(($36)|(0)) < (($37)|(0));
-      if ($cmp18) { label = 12; break; } else { label = 14; break; }
-    case 12: 
-      var $38=$i16;
-      var $39=HEAP32[((5242912)>>2)];
-      var $arrayidx20=(($39)|0);
-      var $40=HEAP32[(($arrayidx20)>>2)];
-      var $arrayidx21=(($40+($38<<2))|0);
-      var $41=HEAPF32[(($arrayidx21)>>2)];
-      var $42=$i16;
-      var $arrayidx22=(($vla+($42<<2))|0);
-      HEAPF32[(($arrayidx22)>>2)]=$41;
-      label = 13; break;
-    case 13: 
-      var $43=$i16;
-      var $inc24=((($43)+(1))|0);
-      $i16=$inc24;
-      label = 11; break;
-    case 14: 
-      var $arrayidx26=(($vla+88)|0);
-      var $44=HEAPF32[(($arrayidx26)>>2)];
-      $cleanup_dest_slot=1;
-      var $45=$saved_stack;
-      _llvm_stackrestore($45);
-      STACKTOP = __stackBase__;
-      return $44;
-    default: assert(0, "bad label: " + label);
-  }
+  var $n_addr;
+  var $count_addr;
+  $n_addr=$n;
+  $count_addr=$count;
+  var $0=$n_addr;
+  var $1=$0;
+  var $vtable=HEAP32[(($1)>>2)];
+  var $vfn=(($vtable+24)|0);
+  var $2=HEAP32[(($vfn)>>2)];
+  var $3=$count_addr;
+  var $4=HEAP32[((5242916)>>2)];
+  var $5=HEAP32[((5242912)>>2)];
+  FUNCTION_TABLE[$2]($0, $3, $4, $5);
+  var $6=HEAP32[((5242912)>>2)];
+  var $arrayidx=(($6)|0);
+  var $7=HEAP32[(($arrayidx)>>2)];
+  return $7;
 }
 Module["_NOISE_compute"] = _NOISE_compute;
 function _NOISE_getNumInputs($n) {
@@ -2205,18 +2138,72 @@ function _NOISE_destructor($n) {
   while(1) switch(label) {
     case 2: 
       var $n_addr;
+      var $i;
+      var $i1;
       $n_addr=$n;
-      var $0=$n_addr;
-      var $isnull=(($0)|(0))==0;
-      if ($isnull) { label = 4; break; } else { label = 3; break; }
+      $i=0;
+      label = 3; break;
     case 3: 
-      var $1=$0;
-      var $vtable=HEAP32[(($1)>>2)];
-      var $vfn=(($vtable+4)|0);
-      var $2=HEAP32[(($vfn)>>2)];
-      FUNCTION_TABLE[$2]($0);
-      label = 4; break;
+      var $0=$i;
+      var $1=HEAP32[((5242884)>>2)];
+      var $cmp=(($0)|(0)) < (($1)|(0));
+      if ($cmp) { label = 4; break; } else { label = 8; break; }
     case 4: 
+      var $2=$i;
+      var $3=HEAP32[((5242916)>>2)];
+      var $arrayidx=(($3+($2<<2))|0);
+      var $4=HEAP32[(($arrayidx)>>2)];
+      var $isnull=(($4)|(0))==0;
+      if ($isnull) { label = 6; break; } else { label = 5; break; }
+    case 5: 
+      var $5=$4;
+      __ZdlPv($5);
+      label = 6; break;
+    case 6: 
+      label = 7; break;
+    case 7: 
+      var $6=$i;
+      var $inc=((($6)+(1))|0);
+      $i=$inc;
+      label = 3; break;
+    case 8: 
+      $i1=0;
+      label = 9; break;
+    case 9: 
+      var $7=$i1;
+      var $8=HEAP32[((5242880)>>2)];
+      var $cmp3=(($7)|(0)) < (($8)|(0));
+      if ($cmp3) { label = 10; break; } else { label = 14; break; }
+    case 10: 
+      var $9=$i1;
+      var $10=HEAP32[((5242912)>>2)];
+      var $arrayidx5=(($10+($9<<2))|0);
+      var $11=HEAP32[(($arrayidx5)>>2)];
+      var $isnull6=(($11)|(0))==0;
+      if ($isnull6) { label = 12; break; } else { label = 11; break; }
+    case 11: 
+      var $12=$11;
+      __ZdlPv($12);
+      label = 12; break;
+    case 12: 
+      label = 13; break;
+    case 13: 
+      var $13=$i1;
+      var $inc10=((($13)+(1))|0);
+      $i1=$inc10;
+      label = 9; break;
+    case 14: 
+      var $14=$n_addr;
+      var $isnull12=(($14)|(0))==0;
+      if ($isnull12) { label = 16; break; } else { label = 15; break; }
+    case 15: 
+      var $15=$14;
+      var $vtable=HEAP32[(($15)>>2)];
+      var $vfn=(($vtable+4)|0);
+      var $16=HEAP32[(($vfn)>>2)];
+      FUNCTION_TABLE[$16]($14);
+      label = 16; break;
+    case 16: 
       return;
     default: assert(0, "bad label: " + label);
   }
@@ -11084,7 +11071,7 @@ var faust = faust || {};
         }
 
         that.compute = function (count) {
-            return NOISE_compute(that.ptr, count);
+            return faust.ptrToArray(NOISE_compute(that.ptr, count), count);
         }
 
         that.destroy = function () {
@@ -11092,6 +11079,18 @@ var faust = faust || {};
         }
         
         return that;
+    }
+    
+    /* This is Super duper nasty... THERE HAS TO BE A BETTER WAY TO GO FROM POINTER TO ARRAY */
+    
+    faust.ptrToArray = function(ptr, size) {
+        var a = [];
+        
+        for (var i = 0; i < size*4; i+=4) {
+            a.push(getValue(ptr+i, "float"));
+        }
+        
+        return a;
     }
 }())
 
