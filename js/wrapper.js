@@ -4,6 +4,7 @@ var faust = faust || {};
 
 (function() {
     
+    // This should be made to only make a new context if one does not exist
     faust.context = new webkitAudioContext();
     
     var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
@@ -17,6 +18,7 @@ var faust = faust || {};
         
         that.ptr = NOISE_constructor(faust.context.sampleRate);
         
+        // Bind to C++ Member Functions
         that.getNumInputs = function () {
             return NOISE_getNumInputs(that.ptr);
         }
@@ -32,6 +34,32 @@ var faust = faust || {};
         that.destroy = function () {
             NOISE_destructor(that.ptr);
         }
+        
+        // Bind to Web Audio
+        
+        that.play = function () {
+            that.jsNode.connect(faust.context.destination);
+        };
+        
+        that.pause = function () {
+            that.jsNode.disconnect(faust.context.destination);
+        };
+        
+        that.generateSamples = function (e) {
+            var output = e.outputBuffer.getChannelData(0);
+            var noiseOutput = that.compute(output.length);
+            for (var i = 0; i < output.length; i++) {
+                output[i] = noiseOutput[i];
+            }
+        };
+        
+        that.init = function () {
+            that.jsNode = faust.context.createJavaScriptNode(1024, 1, 1);
+            that.jsNode.onaudioprocess = that.generateSamples;
+            that.play();
+        };
+    
+        that.init();
         
         return that;
     }
