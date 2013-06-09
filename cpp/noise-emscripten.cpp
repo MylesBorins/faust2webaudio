@@ -196,7 +196,6 @@ class Noise : public dsp {
   public:
 	
 	int iRec0[2];
-	FAUSTFLOAT fvslider0;
 	
   public:
 	
@@ -251,7 +250,6 @@ class Noise : public dsp {
 	
 	virtual void instanceInit(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
-		fvslider0 = FAUSTFLOAT(0.);
 		for (int i = 0; (i < 2); i = (i + 1)) {
 			iRec0[i] = 0;
 			
@@ -266,18 +264,15 @@ class Noise : public dsp {
 	
 	virtual void buildUserInterface(UI* interface) {
 		interface->openVerticalBox("noise");
-		interface->declare(&fvslider0, "style", "knob");
-		interface->addVerticalSlider("Volume", &fvslider0, 0.f, 0.f, 1.f, 0.1f);
 		interface->closeBox();
 		
 	}
 	
 	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 		FAUSTFLOAT* output0 = outputs[0];
-		float fSlow0 = (4.65661e-10f * float(fvslider0));
 		for (int i = 0; (i < count); i = (i + 1)) {
 			iRec0[0] = (12345 + (1103515245 * iRec0[1]));
-			output0[i] = FAUSTFLOAT((fSlow0 * float(iRec0[0])));
+			output0[i] = FAUSTFLOAT((2.32831e-10f * float(iRec0[0])));
 			iRec0[1] = iRec0[0];
 			
 		}
@@ -293,7 +288,6 @@ class Noise : public dsp {
 	#define FAUST_OUTPUTS 1
 	#define FAUST_ACTIVES 0
 	#define FAUST_PASSIVES 0
-	FAUST_ADDVERTICALSLIDER("noise/Volume", fvslider0, 0.0f, 0.0f, 1.0f, 0.1f);
 #endif
 
 int main(int argc, char *argv[])
@@ -304,23 +298,52 @@ int main(int argc, char *argv[])
 
 #endif
 // Adapted From https://gist.github.com/camupod/5640386
-//compile using "C" linkage to avoid name obfuscation
+// compile using "C" linkage to avoid name obfuscation
 
 extern "C" {
+    float** fInChannel;
+    float** fOutChannel;
+    int numInputs;
+    int numOutputs;
     //constructor
     void *NOISE_constructor(int samplingFreq) {
+        // Make a new noise object
         Noise* n = new Noise();
+        // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
+        
+        // Lets get this once so we don't need to keep calculating every call to compute
+        numInputs = n->getNumInputs();
+        numOutputs = n->getNumOutputs();
         return n;
     }
     
-    FAUSTFLOAT **NOISE_compute(Noise *n, int count) {
-        FAUSTFLOAT** input = 0;
-        FAUSTFLOAT** output;
+    FAUSTFLOAT NOISE_compute(Noise *n, int count) {
         
-        n->compute(count, input, output);
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // THERE IS CURRENTLY A SUPER NASTY MEMORY LEAK HERE
+        // For now just trying to get it to work but
+        // I am creating all these float arrays and
+        // Not dealing with the memory afterwards
         
-        return output;
+        int numInputs = n->getNumInputs();
+        int numOutputs = n->getNumOutputs();
+        
+        for (int i = 0; i < numInputs; i++) {
+            fInChannel[i] = new float[count];
+        }
+        for (int i = 0; i < numOutputs; i++) {
+            fOutChannel[i] = new float[count];
+        }
+        
+        n->compute(count, fInChannel, fOutChannel);
+        
+        float temp[count];
+        for (int i; i < count; i++) {
+            temp[i] = fOutChannel[0][i];
+        }
+        
+        return temp[22];
     }
     
     int NOISE_getNumInputs(Noise *n){
@@ -335,9 +358,6 @@ extern "C" {
         delete n;
     }
 }
-
-// float** fInChannel;
-// float** fOutChannel;
 
 // Number of channels gotten from getNumInputs / getNumOutputs
 

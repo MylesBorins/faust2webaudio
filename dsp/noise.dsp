@@ -38,7 +38,7 @@ This process is illustrated on figure 1.
 <diagram>process</diagram>
 </mdoc>
 
-process = noise * vslider("Volume[style:knob]", 0, 0, 1, 0.1);
+process = noise * 0.5;
 
 <mdoc>
 \section{Notice of this documentation}
