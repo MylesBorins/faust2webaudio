@@ -11073,7 +11073,8 @@ var faust = faust || {};
         }
 
         that.compute = function (count) {
-            return faust.ptrToArray(NOISE_compute(that.ptr, count), count);
+            var ptr = NOISE_compute(that.ptr, count);
+            return HEAPF32.subarray(ptr>>2, (ptr+count*4)>>2);
         }
 
         that.destroy = function () {
@@ -11093,6 +11094,10 @@ var faust = faust || {};
         that.generateSamples = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             var noiseOutput = that.compute(output.length);
+            
+            // Is there a better way to do this?
+            // Seems rather harsh to have to replace each sample in the buffer
+            // One at a time
             for (var i = 0; i < output.length; i++) {
                 output[i] = noiseOutput[i];
             }
