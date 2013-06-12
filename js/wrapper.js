@@ -33,10 +33,9 @@ var faust = faust || {};
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             var ptr = NOISE_compute(that.ptr, 1024);
-            var noiseOutput = HEAPF32.subarray(ptr>>2, (ptr+1024*4)>>2);
 
             for (var i = 0; i < output.length; i++) {
-                output[i] = noiseOutput[i];
+                output[i] = HEAPF32[ptr>>2 + 4 * i];
             }
         };
 
