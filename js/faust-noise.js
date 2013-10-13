@@ -6542,7 +6542,10 @@ var faust = faust || {};
 (function () {
 
     // This should be made to only make a new context if one does not exist
-    faust.context = new webkitAudioContext();
+    if (!faust.context)
+    {
+      faust.context = new webkitAudioContext();
+    }
 
     var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
     var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
