@@ -7,9 +7,7 @@ var faust = faust || {};
 (function () {
 
     // This should be made to only make a new context if one does not exist
-/*    if(!faust.context){*/
-        faust.context = new webkitAudioContext();
-/*    }*/
+    faust.context = new webkitAudioContext();
 
     var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
     var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
@@ -35,9 +33,10 @@ var faust = faust || {};
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             var ptr = NOISE_compute(that.ptr, 1024);
+            var noiseOutput = HEAPF32.subarray(ptr>>2, (ptr+1024*4)>>2);
 
             for (var i = 0; i < output.length; i++) {
-                output[i] = HEAPF32[ptr>>2 + 4 * i];
+                output[i] = noiseOutput[i];
             }
         };
 
