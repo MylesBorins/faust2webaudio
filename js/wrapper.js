@@ -14,7 +14,7 @@ var faust = faust || {};
 
     var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
     var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
-    var NOISE_compute = Module.cwrap('NOISE_compute', ['number'], ['number', 'number']);
+    var NOISE_compute = Module.cwrap('NOISE_compute', ['number'], ['number', 'number', 'number', 'number']);
     var NOISE_getNumInputs = Module.cwrap('NOISE_getNumInputs', 'number', []);
     var NOISE_getNumOutputs = Module.cwrap('NOISE_getNumOutputs', 'number', []);
 
@@ -35,8 +35,8 @@ var faust = faust || {};
         
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
-            var ptr = NOISE_compute(that.ptr, 1024);
-            var noiseOutput = HEAPF32.subarray(ptr>>2, (ptr+1024*4)>>2);
+            NOISE_compute(that.ptr, that.vectorsize, that.ins, that.outs);
+            var noiseOutput = HEAPF32.subarray(that.outs>>2, (that.outs+1024*4)>>2);
 
             for (var i = 0; i < output.length; i++) {
                 output[i] = noiseOutput[i];
@@ -58,8 +58,25 @@ var faust = faust || {};
         };
 
         that.init = function () {
-            that.jsNode = faust.context.createJavaScriptNode(1024, 1, 1);
+            that.ptrsize = 4; //assuming poitner in emscripten are 32bits
+            that.vectorsize = 1024;
+            that.samplesize = 8;
+            that.numIn = that.getNumInputs();
+            that.numOut = that.getNumOutputs();
+            
+            that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, 1, 1);
             that.jsNode.onaudioprocess = that.compute;
+            
+            that.ins = Module._malloc(that.ptrsize*that.numIn);
+            
+            for (i=0;i<that.numIn;i++) { // assing to our array of pointer elements an array of 64bit floats, one for each channel. currently we assume pointers are 32bits
+              HEAP32[(that.ins>>2)+i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+            }
+            
+            that.outs = Module._malloc(that.ptrsize*that.numOut); //ptrsize, change to eight or use Runtime.QUANTUM? or what?             
+            for (i=0;i<that.numOut;i++) { // assing to our array of pointer elements an array of 64bit floats, one for each channel. currently we assume pointers are 32bits
+              HEAP32[(that.outs>>2)+i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+            }
         };
 
         that.init();

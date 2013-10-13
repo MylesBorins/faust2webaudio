@@ -1,8 +1,8 @@
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
 extern "C" {
-    float** fInChannel;
-    float** fOutChannel;
+    // float** fInChannel;
+    // float** fOutChannel;
     int numInputs;
     int numOutputs;
     //constructor
@@ -11,31 +11,13 @@ extern "C" {
         Noise* n = new Noise();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
-        
-        // Lets get this once so we don't need to keep calculating every call to compute
-        numInputs = n->getNumInputs();
-        numOutputs = n->getNumOutputs();
-        
-        // This Needs to be dealt with... curently only able to return a single buffer... rather
-        // Way too mono...
-        // This is due to the Channels not being properly initialized... need to look at how
-        // Other architecture fiels do this a bit better
-        for (int i = 0; i < numInputs; i++) {
-            fInChannel[i] = new float[bufferSize];
-        }
-        
-        for (int i = 0; i < numOutputs; i++) {
-            fOutChannel[i] = new float[bufferSize];
-        }
+
         return n;
     }
     
-    FAUSTFLOAT *NOISE_compute(Noise *n, int count) {
-                                
-        n->compute(count, fInChannel, fOutChannel);
-        
-        // Returning due to problem as mentioend above... 
-        return fOutChannel[0];
+    int NOISE_compute(Noise *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+        n->compute(count, inputs, outputs);
+        return 1;
     }
     
     int NOISE_getNumInputs(Noise *n){
@@ -47,13 +29,6 @@ extern "C" {
     }
 
     void NOISE_destructor(Noise *n) {
-        for (int i = 0; i < numInputs; i++) {
-            delete fInChannel[i];
-        }
-        
-        for (int i = 0; i < numOutputs; i++) {
-            delete fOutChannel[i];
-        }
         delete n;
     }
 }
