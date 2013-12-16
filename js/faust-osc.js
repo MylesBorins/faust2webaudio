@@ -9041,12 +9041,17 @@ var faust = faust || {};
         };
         
         that.compute = function (e) {
-            var output = e.outputBuffer.getChannelData(0);
+            
             OSC_compute(that.ptr, that.vectorsize, that.ins, that.outs);
             var oscChans = HEAP32.subarray(that.outs>>2, (that.outs+that.numOut*that.ptrsize)>>2);
-            var oscOutput = HEAPF32.subarray(oscChans[0]>>2, (oscChans[0]+that.vectorsize*that.ptrsize)>>2);
-            for (var i = 0; i < output.length; i++) {
-                output[i] = oscOutput[i];
+            for (var i = 0; i < that.numOut; i++)
+            {
+              var output = e.outputBuffer.getChannelData(i);
+              var oscOutput = HEAPF32.subarray(oscChans[i]>>2, (oscChans[i]+that.vectorsize*that.ptrsize)>>2);
+              
+              for (var j = 0; j < output.length; j++) {
+                  output[j] = oscOutput[j];
+              }
             }
         };
 
