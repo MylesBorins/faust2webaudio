@@ -57,9 +57,9 @@ allpasstuningL4 = 225;
 // Dry : original signal
 // Wet : reverberated signal
 
-dampSlider      = 0.5;
-roomsizeSlider  = 0.5;
-wetSlider       = 0.7;
+dampSlider      = 1;
+roomsizeSlider  = 1;
+wetSlider       = 1;
 combfeed        = roomsizeSlider;
 
 
