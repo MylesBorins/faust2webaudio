@@ -3,10 +3,10 @@
 
 # Adapted From https://gist.github.com/camupod/5640386
 echo 'Compiling From Faust -> CPP'
-faust -a minimal.cpp -i -uim -cn osc  dsp/osc.dsp -o cpp/faust-osc.cpp
+faust -a minimal.cpp -i -uim -cn Osc  dsp/osc.dsp -o cpp/faust-osc.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping dat cpp"
-sed -e "s/DSP/OSC/g" -e "s/Dsp/OSC/g" -e "s/dsp/OSC/g" cpp/faust-wrapper.cpp >> cpp/faust-osc.cpp
+sed -e "s/DSP/OSC/g" -e "s/Dsp/Osc/g" -e "s/dsp/osc/g" cpp/faust-wrapper.cpp >> cpp/faust-osc.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Using emscripten to compile to JavaScript"
 emcc cpp/faust-osc.cpp -o js/faust-osc-temp.js \
