@@ -71,7 +71,7 @@ allpass(dt,fb) = (_,_ <: (*(fb),_:+:@(dt)), -) ~ _ : (!,_);
 comb(dt, fb, damp) = (+:@(dt)) ~ (*(1-damp) : (+ ~ *(damp)) : *(fb));
 
 
-// Reverb components
+// Reverb components  
 //------------------
 
 monoReverb(fb1, fb2, damp, spread)
