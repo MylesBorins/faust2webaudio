@@ -8888,12 +8888,29 @@ var faust = faust || {};
         };
         
         that.compute = function (e) {
-            var output = e.outputBuffer.getChannelData(0);
+            var noiseOutChans = HEAP32.subarray(that.outs>>2, (that.outs+that.numOut*that.ptrsize)>>2);
+            var noiseInChans = HEAP32.subarray(that.ins>>2, (that.ins+that.ins*that.ptrsize)>>2);
+            
+            for (var i = 0; i < that.numIn; i++)
+            {
+              var input = e.inputBuffer.getChannelData(i);
+              var noiseInput = HEAPF32.subarray(noiseInChans[i]>>2, (noiseInChans[i]+that.vectorsize*that.ptrsize)>>2);
+              
+              for (var j = 0; j < output.length; j++) {
+                  noiseInput[j] = input[j];
+              }
+            }
+            
             NOISE_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-            var noiseOutput = HEAPF32.subarray(that.outs>>2, (that.outs+that.vectorsize*that.ptrsize)>>2);
-
-            for (var i = 0; i < output.length; i++) {
-                output[i] = noiseOutput[i];
+            
+            for (var i = 0; i < that.numOut; i++)
+            {
+              var output = e.outputBuffer.getChannelData(i);
+              var noiseOutput = HEAPF32.subarray(noiseOutChans[i]>>2, (noiseOutChans[i]+that.vectorsize*that.ptrsize)>>2);
+              
+              for (var j = 0; j < output.length; j++) {
+                  output[j] = noiseOutput[j];
+              }
             }
         };
 
@@ -8913,17 +8930,17 @@ var faust = faust || {};
 
         that.init = function () {
             that.ptrsize = 4; //assuming poitner in emscripten are 32bits
-            that.vectorsize = 1024;
-            that.samplesize = 8;
+            that.vectorsize = 2048;
+            that.samplesize = 4;
             that.numIn = that.getNumInputs();
             that.numOut = that.getNumOutputs();
             
-            that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, 1, 1);
+            that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
             that.jsNode.onaudioprocess = that.compute;
             
             that.ins = Module._malloc(that.ptrsize*that.numIn);
             
-            for (i=0;i<that.numIn;i++) { // assing to our array of pointer elements an array of 64bit floats, one for each channel. currently we assume pointers are 32bits
+            for (i=0;i<that.numIn;i++) { // assing to our array of pointer elements an array of 32bit floats, one for each channel. currently we assume pointers are 32bits
               HEAP32[(that.ins>>2)+i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
             }
             
@@ -8938,6 +8955,3 @@ var faust = faust || {};
         return that;
     };
 }());
-
-var noise = faust.noise();
-noise.play();

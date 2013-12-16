@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>FAUST OSC</title>
+      <title>FAUST FREEVERB</title>
       <!-- I am so Meta -->
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +18,20 @@
     <body>
     
     <div class="center">
-    	<h1>SINE<h1>
+    	<h1>FREEVERB<h1>
     </div>
-
-    <script src="js/faust-osc.js"></script>
+    
+    <script src="js/faust-freeverb.js"></script>
     <script>
-      var osc = faust.osc();
-      osc.play();
+      var oscillator = faust.context.createOscillator();
+      var freeverb = faust.freeverb();
+
+      oscillator.type = 0; // sine wave
+      oscillator.frequency.value = 220;
+/*      oscillator.connect(faust.context.destination);*/
+      oscillator.connect(freeverb.jsNode);
+      freeverb.play();
+      oscillator.noteOn && oscillator.noteOn(0);
     </script>
     </body>
 
