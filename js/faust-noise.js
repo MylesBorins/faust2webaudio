@@ -4345,18 +4345,16 @@ function __ZN5NoiseD1Ev($this){
  __ZN5NoiseD2Ev($this1);
  return;
 }
-function _NOISE_constructor($samplingFreq,$bufferSize){
+function _NOISE_constructor($samplingFreq){
  var label=0;
  label = 1; 
  while(1)switch(label){
  case 1: 
  var $samplingFreq_addr;
- var $bufferSize_addr;
  var $n;
  var $exn_slot;
  var $ehselector_slot;
  $samplingFreq_addr=$samplingFreq;
- $bufferSize_addr=$bufferSize;
  var $call=__Znwj(16);
  var $0=$call;
  var $1=$0;
@@ -8892,7 +8890,7 @@ var faust = faust || {};
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             NOISE_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-            var noiseOutput = HEAPF32.subarray(that.outs>>2, (that.outs+1024*4)>>2);
+            var noiseOutput = HEAPF32.subarray(that.outs>>2, (that.outs+that.vectorsize*that.ptr)>>2);
 
             for (var i = 0; i < output.length; i++) {
                 output[i] = noiseOutput[i];
