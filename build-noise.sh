@@ -16,5 +16,5 @@ echo "Wrapping js"
 cat js/header.js > js/faust-noise.js
 cat js/faust-noise-temp.js >> js/faust-noise.js
 rm js/faust-noise-temp.js
-cat js/wrapper.js >> js/faust-noise.js
+sed -e "s/DSP/NOISE/g" -e "s/dsp/noise/g" js/wrapper.js >> js/faust-noise.js
 echo " $(tput setaf 2)Complete$(tput sgr0)"

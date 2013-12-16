@@ -12,39 +12,39 @@ var faust = faust || {};
       faust.context = new webkitAudioContext();
     }
 
-    var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
-    var NOISE_destructor = Module.cwrap('NOISE_destructor', null, ['number']);
-    var NOISE_compute = Module.cwrap('NOISE_compute', ['number'], ['number', 'number', 'number', 'number']);
-    var NOISE_getNumInputs = Module.cwrap('NOISE_getNumInputs', 'number', []);
-    var NOISE_getNumOutputs = Module.cwrap('NOISE_getNumOutputs', 'number', []);
+    var DSP_constructor = Module.cwrap('DSP_constructor', 'number', 'number');
+    var DSP_destructor = Module.cwrap('DSP_destructor', null, ['number']);
+    var DSP_compute = Module.cwrap('DSP_compute', ['number'], ['number', 'number', 'number', 'number']);
+    var DSP_getNumInputs = Module.cwrap('DSP_getNumInputs', 'number', []);
+    var DSP_getNumOutputs = Module.cwrap('DSP_getNumOutputs', 'number', []);
 
-    faust.noise = function () {
+    faust.dsp = function () {
         var that = {};
 
-        that.ptr = NOISE_constructor(faust.context.sampleRate);
+        that.ptr = DSP_constructor(faust.context.sampleRate);
 
         // Bind to C++ Member Functions
 
         that.getNumInputs = function () {
-            return NOISE_getNumInputs(that.ptr);
+            return DSP_getNumInputs(that.ptr);
         };
 
         that.getNumOutputs = function () {
-            return NOISE_getNumOutputs(that.ptr);
+            return DSP_getNumOutputs(that.ptr);
         };
         
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
-            NOISE_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-            var noiseOutput = HEAPF32.subarray(that.outs>>2, (that.outs+1024*4)>>2);
+            DSP_compute(that.ptr, that.vectorsize, that.ins, that.outs);
+            var dspOutput = HEAPF32.subarray(that.outs>>2, (that.outs+1024*4)>>2);
 
             for (var i = 0; i < output.length; i++) {
-                output[i] = noiseOutput[i];
+                output[i] = dspOutput[i];
             }
         };
 
         that.destroy = function () {
-            NOISE_destructor(that.ptr);
+            DSP_destructor(that.ptr);
         };
 
         // Bind to Web Audio
@@ -85,5 +85,5 @@ var faust = faust || {};
     };
 }());
 
-var noise = faust.noise();
-noise.play();
+var dsp = faust.dsp();
+dsp.play();

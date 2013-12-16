@@ -18,5 +18,5 @@ echo "Wrapping js"
 cat js/header.js > js/faust-osc.js
 cat js/faust-osc-temp.js >> js/faust-osc.js
 rm js/faust-osc-temp.js
-cat js/wrapper.js >> js/faust-osc.js
+sed -e "s/DSP/OSC/g" -e "s/dsp/osc/g" js/wrapper.js >> js/faust-osc.js
 echo " $(tput setaf 2)Complete$(tput sgr0)"
