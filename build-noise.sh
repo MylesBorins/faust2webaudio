@@ -6,7 +6,7 @@ echo 'Compiling From Faust -> CPP'
 faust -a minimal.cpp -i -uim -cn Noise  dsp/noise.dsp -o cpp/faust-noise.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping dat cpp"
-cat cpp/faust-noise-wrapper.cpp >> cpp/faust-noise.cpp
+sed "s/DSP/NOISE/" cpp/faust-wrapper.cpp >> cpp/faust-noise.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Using emscripten to compile to JavaScript"
 emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js \

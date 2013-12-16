@@ -6,7 +6,7 @@ extern "C" {
     int numInputs;
     int numOutputs;
     //constructor
-    void *NOISE_constructor(int samplingFreq, int bufferSize) {
+    void *DSP_constructor(int samplingFreq, int bufferSize) {
         // Make a new noise object
         Noise* n = new Noise();
         // Init it with samplingFreq supplied... should we give a sample size here too?
@@ -15,20 +15,20 @@ extern "C" {
         return n;
     }
     
-    int NOISE_compute(Noise *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int DSP_compute(Noise *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
     }
     
-    int NOISE_getNumInputs(Noise *n){
+    int DSP_getNumInputs(Noise *n){
         return n->getNumInputs();
     }
     
-    int NOISE_getNumOutputs(Noise *n){
+    int DSP_getNumOutputs(Noise *n){
         return n->getNumOutputs();
     }
 
-    void NOISE_destructor(Noise *n) {
+    void DSP_destructor(Noise *n) {
         delete n;
     }
 }
