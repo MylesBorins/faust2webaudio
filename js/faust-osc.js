@@ -9043,7 +9043,7 @@ var faust = faust || {};
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             OSC_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-            var oscOutput = HEAPF32.subarray(that.outs>>2, (that.outs+that.vectorsize*that.ptr)>>2);
+            var oscOutput = HEAPF32.subarray(that.outs>>2, (that.outs+that.vectorsize*that.ptrsize)>>2);
 
             for (var i = 0; i < output.length; i++) {
                 output[i] = oscOutput[i];
