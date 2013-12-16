@@ -36,7 +36,9 @@ var faust = faust || {};
         that.compute = function (e) {
             var output = e.outputBuffer.getChannelData(0);
             DSP_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-            var dspOutput = HEAPF32.subarray(that.outs>>2, (that.outs+that.vectorsize*that.ptrsize)>>2);
+            var dspChans = HEAP32.subarray(that.outs>>2, (that.outs+that.numOut*that.ptrsize)>>2);
+            var dspOutput = HEAPF32.subarray(dspChans[0]>>2, (dspChans[0]+that.vectorsize*that.ptrsize)>>2);
+            // This will only work for one channel currently, needs to be extended
             for (var i = 0; i < output.length; i++) {
                 output[i] = dspOutput[i];
             }
