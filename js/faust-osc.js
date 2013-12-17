@@ -9049,7 +9049,7 @@ var faust = faust || {};
               var input = e.inputBuffer.getChannelData(i);
               var oscInput = HEAPF32.subarray(oscInChans[i]>>2, (oscInChans[i]+that.vectorsize*that.ptrsize)>>2);
               
-              for (var j = 0; j < output.length; j++) {
+              for (var j = 0; j < input.length; j++) {
                   oscInput[j] = input[j];
               }
             }
