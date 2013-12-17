@@ -10684,6 +10684,11 @@ var faust = faust || {};
         that.destroy = function () {
             FREEVERB_destructor(that.ptr);
         };
+        
+        // Connect to another node
+        that.connect = function (node) {
+          that.jsNode.connect(node);
+        }
 
         // Bind to Web Audio
 
