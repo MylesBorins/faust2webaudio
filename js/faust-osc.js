@@ -19,8 +19,7 @@ var faust = faust || {};
 
 (function () {
 
-    // This should be made to only make a new context if one does not exist
-    'use strict';// Note: Some Emscripten settings will significantly limit the speed of the generated code.
+    // This should be made to only make a new context if one does not exist// Note: Some Emscripten settings will significantly limit the speed of the generated code.
 // Note: Some Emscripten settings may limit the speed of the generated code.
 // The Module object: Our interface to the outside world. We import
 // and export values on it, and do the work to get that through

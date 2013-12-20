@@ -20,4 +20,3 @@ var faust = faust || {};
 (function () {
 
     // This should be made to only make a new context if one does not exist
-    'use strict';
