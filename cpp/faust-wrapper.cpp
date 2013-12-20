@@ -1,10 +1,11 @@
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
+#include <emscripten.h>
+
 extern "C" {
-    int numInputs;
-    int numOutputs;
     //constructor
     void *DSP_constructor(int samplingFreq) {
+        
         // Make a new dsp object
         Dsp* n = new Dsp();
         // Init it with samplingFreq supplied... should we give a sample size here too?
@@ -31,6 +32,6 @@ extern "C" {
     }
 }
 
-// Number of channels gotten from getNumInputs / getNumOutputs
-
-// fOutChannel[i] = (float*)ioData->mBuffers[i].mData;
+// EM_ASM(
+//     
+// );
