@@ -20,29 +20,14 @@
     <div class="center">
     	<h1>FREEVERB<h1>
     </div>
+    <script src="js/faust-noise.js"></script>
     <script src="js/faust-freeverb.js"></script>
     <script>
-      var oscillator = faust.context.createOscillator();
-      var lfo = faust.context.createOscillator();
-      var gain = faust.context.createGainNode();
-      var gain2 = faust.context.createGainNode();
-      var freeverb = faust.freeverb();
+    var noise = faust.noise();
+    var freeverb = faust.freeverb();
+    noise.connect(freeverb.jsNode);
+    freeverb.play();
 
-      lfo.type = 0;
-      lfo.frequency.value = 0.5;
-      lfo.connect(gain.gain);
-
-      oscillator.type = 0; // sine wave
-      oscillator.frequency.value = 220;
-      oscillator.connect(gain);
-      
-      gain2.gain.value = 0.5;
-      
-      gain.connect(gain2);
-      gain2.connect(freeverb.jsNode);
-      freeverb.play();
-      oscillator.noteOn && oscillator.noteOn(0);
-      lfo.noteOn && lfo.noteOn(0);
     </script>
     </body>
 

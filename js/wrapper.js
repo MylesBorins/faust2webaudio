@@ -1,12 +1,4 @@
-/*global webkitAudioContext, Module, HEAPF32*/
 
-// Adapted From https://gist.github.com/camupod/5640386
-
-var faust = faust || {};
-
-(function () {
-
-    // This should be made to only make a new context if one does not exist
     if (!faust.context)
     {
       faust.context = new webkitAudioContext();
