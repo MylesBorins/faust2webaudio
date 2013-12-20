@@ -226,7 +226,7 @@ class OscSIG0 {
 	
   public:
 	
-	int iRec0[2];
+	int iRec1[2];
 	
   public:
 	
@@ -269,7 +269,7 @@ class OscSIG0 {
 	
 	void instanceInitOscSIG0(int samplingFreq) {
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec0[i] = 0;
+			iRec1[i] = 0;
 			
 		}
 		
@@ -277,9 +277,9 @@ class OscSIG0 {
 	
 	void fillOscSIG0(int count, float* output) {
 		for (int i = 0; (i < count); i = (i + 1)) {
-			iRec0[0] = (1 + iRec0[1]);
-			output[i] = sinf((9.58738e-05f * float((iRec0[0] - 1))));
-			iRec0[1] = iRec0[0];
+			iRec1[0] = (1 + iRec1[1]);
+			output[i] = sinf((9.58738e-05f * float((iRec1[0] - 1))));
+			iRec1[1] = iRec1[0];
 			
 		}
 		
@@ -289,6 +289,7 @@ class OscSIG0 {
 OscSIG0* newOscSIG0() {return (OscSIG0*) new OscSIG0(); }
 void deleteOscSIG0(OscSIG0* dsp) {delete dsp; }
 
+float powf(float dummy0, float dummy1);
 static float ftbl0OscSIG0[65536];
 float floorf(float dummy0);
 
@@ -300,9 +301,12 @@ class Osc : public dsp {
 	
   public:
 	
-	float fRec1[2];
+	float fRec2[2];
+	float fRec0[2];
+	FAUSTFLOAT fhslider0;
 	int fSamplingFreq;
 	float fConst0;
+	FAUSTFLOAT fhslider1;
 	
   public:
 	
@@ -371,9 +375,15 @@ class Osc : public dsp {
 	
 	virtual void instanceInit(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
-		fConst0 = (440.f / float(fmin(192000, fmax(1, fSamplingFreq))));
+		fhslider0 = FAUSTFLOAT(0.);
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			fRec1[i] = 0.f;
+			fRec0[i] = 0.f;
+			
+		}
+		fConst0 = (1.f / float(fmin(192000, fmax(1, fSamplingFreq))));
+		fhslider1 = FAUSTFLOAT(1000.);
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec2[i] = 0.f;
 			
 		}
 		
@@ -385,18 +395,26 @@ class Osc : public dsp {
 	}
 	
 	virtual void buildUserInterface(UI* interface) {
-		interface->openVerticalBox("osc");
+		interface->openVerticalBox("Oscillator");
+		interface->declare(&fhslider1, "unit", "Hz");
+		interface->addHorizontalSlider("freq", &fhslider1, 1000.f, 20.f, 24000.f, 1.f);
+		interface->declare(&fhslider0, "unit", "dB");
+		interface->addHorizontalSlider("volume", &fhslider0, 0.f, -96.f, 0.f, 0.1f);
 		interface->closeBox();
 		
 	}
 	
 	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 		FAUSTFLOAT* output0 = outputs[0];
+		float fSlow0 = (0.001f * powf(10.f, (0.05f * float(fhslider0))));
+		float fSlow1 = (fConst0 * float(fhslider1));
 		for (int i = 0; (i < count); i = (i + 1)) {
-			float fTemp0 = (fConst0 + fRec1[1]);
-			fRec1[0] = (fTemp0 - floorf(fTemp0));
-			output0[i] = FAUSTFLOAT((0.9f * ftbl0OscSIG0[int((65536.f * fRec1[0]))]));
-			fRec1[1] = fRec1[0];
+			fRec0[0] = ((0.999f * fRec0[1]) + fSlow0);
+			float fTemp0 = (fRec2[1] + fSlow1);
+			fRec2[0] = (fTemp0 - floorf(fTemp0));
+			output0[i] = FAUSTFLOAT((fRec0[0] * ftbl0OscSIG0[int((65536.f * fRec2[0]))]));
+			fRec0[1] = fRec0[0];
+			fRec2[1] = fRec2[0];
 			
 		}
 		
@@ -411,6 +429,8 @@ class Osc : public dsp {
 	#define FAUST_OUTPUTS 1
 	#define FAUST_ACTIVES 0
 	#define FAUST_PASSIVES 0
+	FAUST_ADDHORIZONTALSLIDER("Oscillator/freq", fhslider1, 1e+03f, 2e+01f, 2.4e+04f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("Oscillator/volume", fhslider0, 0.0f, -96.0f, 0.0f, 0.1f);
 #endif
 
 int main(int argc, char *argv[])
@@ -422,11 +442,12 @@ int main(int argc, char *argv[])
 #endif
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
+#include <emscripten.h>
+
 extern "C" {
-    int numInputs;
-    int numOutputs;
     //constructor
     void *OSC_constructor(int samplingFreq) {
+        
         // Make a new osc object
         Osc* n = new Osc();
         // Init it with samplingFreq supplied... should we give a sample size here too?
@@ -453,6 +474,6 @@ extern "C" {
     }
 }
 
-// Number of channels gotten from getNumInputs / getNumOutputs
-
-// fOutChannel[i] = (float*)ioData->mBuffers[i].mData;
+// EM_ASM(
+//     
+// );
