@@ -13,7 +13,7 @@ sed -e "s/DSP/FREEVERB/g" -e "s/Dsp/Freeverb/g" -e "s/dsp/freeverb/g" cpp/faust-
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Using emscripten to compile to JavaScript"
 emcc cpp/faust-freeverb.cpp -o js/faust-freeverb-temp.js \
--s EXPORTED_FUNCTIONS="['_FREEVERB_constructor','_FREEVERB_destructor','_FREEVERB_compute', '_FREEVERB_getNumInputs', '_FREEVERB_getNumOutputs', '_FREEVERB_getNumParams']"
+-s EXPORTED_FUNCTIONS="['_FREEVERB_constructor','_FREEVERB_destructor','_FREEVERB_compute', '_FREEVERB_getNumInputs', '_FREEVERB_getNumOutputs', '_FREEVERB_getNumParams', '_FREEVERB_getNextParam']"
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping js"
 cat js/header.js > js/faust-freeverb.js
