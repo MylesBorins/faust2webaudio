@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>FAUST NOISE</title>
+      <!-- I am so Meta -->
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="FAUST NOISE">
+      <meta name="author" content="Myles Borins">
+      <!-- OpenGraph Meta -->
+      <meta property="og:title" content="FAUST NOISE"/>
+      <!-- <meta property="og:url" content=""/> -->
+      <meta property="og:site_name" content="FAUST NOISE"/>
+      <!-- <meta property="og:image" content="Some Image"/> -->
+      <link href="css/custom.css" rel="stylesheet">
+    </head>
+
+    <body>
+    
+    <div class="center">
+    	<h1>Rev?<h1>
+    </div>
+
+    <script src="js/faust-reverbDesigner.js"></script>
+    <script>
+      var rev = faust.reverbDesigner();
+      rev.update("Band 0 u", 3015);
+      rev.update("Band 1 u", 2361);
+      rev.update("Band 2 u", 1155);
+      rev.update("Band 3 u", 3015);
+      rev.update("0", 2.6);
+      rev.update("1", 3.4);
+      rev.update("2", 2.7);
+      rev.update("3", 3.5);
+      rev.update("4", 4.0);
+      rev.update("Mute Ext", 1);
+      rev.update("Pink Noi", 1);
+      rev.update("fmax aco", 9.3);
+      rev.update("fmin aco", 1.7);
+      rev.update("Output L", -8.7);
+      rev.play()
+    </script>
+    </body>
+
+</html>
