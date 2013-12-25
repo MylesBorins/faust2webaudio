@@ -236,22 +236,30 @@ class Freeverb : public dsp {
 	float fVec21[512];
 	float fRec30[2];
 	float fVec20[1024];
+	float fRec46[2];
 	float fVec19[2048];
-	int iRec47[2];
+	float fRec47[2];
+	float fRec44[2];
 	float fVec18[2048];
-	int iRec45[2];
+	float fRec45[2];
+	float fRec42[2];
 	float fVec17[2048];
-	int iRec43[2];
+	float fRec43[2];
+	float fRec40[2];
 	float fVec16[2048];
-	int iRec41[2];
+	float fRec41[2];
+	float fRec38[2];
 	float fVec15[2048];
-	int iRec39[2];
+	float fRec39[2];
+	float fRec36[2];
 	float fVec14[2048];
-	int iRec37[2];
+	float fRec37[2];
+	float fRec34[2];
 	float fVec13[2048];
-	int iRec35[2];
+	float fRec35[2];
+	float fRec32[2];
 	float fVec12[2048];
-	int iRec33[2];
+	float fRec33[2];
 	float fRec0[2];
 	float fVec11[256];
 	float fRec2[2];
@@ -260,22 +268,33 @@ class Freeverb : public dsp {
 	float fVec9[512];
 	float fRec6[2];
 	float fVec8[1024];
+	float fRec22[2];
 	float fVec7[2048];
-	int iRec23[2];
+	float fRec23[2];
+	float fRec20[2];
 	float fVec6[2048];
-	int iRec21[2];
+	float fRec21[2];
+	float fRec18[2];
 	float fVec5[2048];
-	int iRec19[2];
+	float fRec19[2];
+	float fRec16[2];
 	float fVec4[2048];
-	int iRec17[2];
+	float fRec17[2];
+	float fRec14[2];
 	float fVec3[2048];
-	int iRec15[2];
+	float fRec15[2];
+	float fRec12[2];
 	float fVec2[2048];
-	int iRec13[2];
+	float fRec13[2];
+	float fRec10[2];
 	float fVec1[2048];
-	int iRec11[2];
+	float fRec11[2];
+	float fRec8[2];
 	float fVec0[2048];
-	int iRec9[2];
+	float fRec9[2];
+	FAUSTFLOAT fhslider0;
+	FAUSTFLOAT fhslider1;
+	FAUSTFLOAT fhslider2;
 	int IOTA;
 	int fSamplingFreq;
 	
@@ -345,8 +364,11 @@ class Freeverb : public dsp {
 	
 	virtual void instanceInit(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
+		fhslider0 = FAUSTFLOAT(0.3333);
+		fhslider1 = FAUSTFLOAT(0.5);
+		fhslider2 = FAUSTFLOAT(0.5);
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec9[i] = 0;
+			fRec9[i] = 0.f;
 			
 		}
 		IOTA = 0;
@@ -355,7 +377,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec11[i] = 0;
+			fRec8[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec11[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -363,7 +389,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec13[i] = 0;
+			fRec10[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec13[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -371,7 +401,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec15[i] = 0;
+			fRec12[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec15[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -379,7 +413,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec17[i] = 0;
+			fRec14[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec17[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -387,7 +425,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec19[i] = 0;
+			fRec16[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec19[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -395,7 +437,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec21[i] = 0;
+			fRec18[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec21[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -403,11 +449,19 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec23[i] = 0;
+			fRec20[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec23[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
 			fVec7[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec22[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 1024); i = (i + 1)) {
@@ -443,7 +497,7 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec33[i] = 0;
+			fRec33[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -451,7 +505,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec35[i] = 0;
+			fRec32[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec35[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -459,7 +517,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec37[i] = 0;
+			fRec34[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec37[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -467,7 +529,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec39[i] = 0;
+			fRec36[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec39[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -475,7 +541,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec41[i] = 0;
+			fRec38[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec41[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -483,7 +553,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec43[i] = 0;
+			fRec40[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec43[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -491,7 +565,11 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec45[i] = 0;
+			fRec42[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec45[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
@@ -499,11 +577,19 @@ class Freeverb : public dsp {
 			
 		}
 		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec47[i] = 0;
+			fRec44[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec47[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 2048); i = (i + 1)) {
 			fVec19[i] = 0.f;
+			
+		}
+		for (int i = 0; (i < 2); i = (i + 1)) {
+			fRec46[i] = 0.f;
 			
 		}
 		for (int i = 0; (i < 1024); i = (i + 1)) {
@@ -547,7 +633,10 @@ class Freeverb : public dsp {
 	}
 	
 	virtual void buildUserInterface(UI* interface) {
-		interface->openVerticalBox("freeverb");
+		interface->openVerticalBox("Freeverb");
+		interface->addHorizontalSlider("Damp", &fhslider2, 0.5f, 0.f, 1.f, 0.025f);
+		interface->addHorizontalSlider("RoomSize", &fhslider1, 0.5f, 0.f, 1.f, 0.025f);
+		interface->addHorizontalSlider("Wet", &fhslider0, 0.3333f, 0.f, 1.f, 0.025f);
 		interface->closeBox();
 		
 	}
@@ -557,36 +646,43 @@ class Freeverb : public dsp {
 		FAUSTFLOAT* input1 = inputs[1];
 		FAUSTFLOAT* output0 = outputs[0];
 		FAUSTFLOAT* output1 = outputs[1];
+		float fSlow0 = float(fhslider0);
+		float fSlow1 = (0.7f + (0.28f * float(fhslider1)));
+		float fSlow2 = (0.4f * float(fhslider2));
+		float fSlow3 = (1.f - fSlow2);
+		float fSlow4 = (1.f - fSlow0);
 		for (int i = 0; (i < count); i = (i + 1)) {
-			iRec9[0] = iRec9[1];
-			float fTemp0 = (0.015f * (float(input0[i]) + float(input1[i])));
-			fVec0[(IOTA & 2047)] = (float(iRec9[0]) + fTemp0);
-			float fRec8 = fVec0[((IOTA - 1116) & 2047)];
-			iRec11[0] = iRec11[1];
-			fVec1[(IOTA & 2047)] = (float(iRec11[0]) + fTemp0);
-			float fRec10 = fVec1[((IOTA - 1188) & 2047)];
-			iRec13[0] = iRec13[1];
-			fVec2[(IOTA & 2047)] = (float(iRec13[0]) + fTemp0);
-			float fRec12 = fVec2[((IOTA - 1277) & 2047)];
-			iRec15[0] = iRec15[1];
-			fVec3[(IOTA & 2047)] = (float(iRec15[0]) + fTemp0);
-			float fRec14 = fVec3[((IOTA - 1356) & 2047)];
-			iRec17[0] = iRec17[1];
-			fVec4[(IOTA & 2047)] = (float(iRec17[0]) + fTemp0);
-			float fRec16 = fVec4[((IOTA - 1422) & 2047)];
-			iRec19[0] = iRec19[1];
-			fVec5[(IOTA & 2047)] = (float(iRec19[0]) + fTemp0);
-			float fRec18 = fVec5[((IOTA - 1491) & 2047)];
-			iRec21[0] = iRec21[1];
-			fVec6[(IOTA & 2047)] = (float(iRec21[0]) + fTemp0);
-			float fRec20 = fVec6[((IOTA - 1557) & 2047)];
-			iRec23[0] = iRec23[1];
-			fVec7[(IOTA & 2047)] = (float(iRec23[0]) + fTemp0);
-			float fRec22 = fVec7[((IOTA - 1617) & 2047)];
-			float fTemp1 = (((((((fRec8 + fRec10) + fRec12) + fRec14) + fRec16) + fRec18) + fRec20) + fRec22);
-			fVec8[(IOTA & 1023)] = (fTemp1 + (0.5f * fRec6[1]));
+			fRec9[0] = ((fSlow2 * fRec9[1]) + (fSlow3 * fRec8[1]));
+			float fTemp0 = float(input0[i]);
+			float fTemp1 = float(input1[i]);
+			float fTemp2 = (0.015f * (fTemp0 + fTemp1));
+			fVec0[(IOTA & 2047)] = ((fSlow1 * fRec9[0]) + fTemp2);
+			fRec8[0] = fVec0[((IOTA - 1116) & 2047)];
+			fRec11[0] = ((fSlow2 * fRec11[1]) + (fSlow3 * fRec10[1]));
+			fVec1[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec11[0]));
+			fRec10[0] = fVec1[((IOTA - 1188) & 2047)];
+			fRec13[0] = ((fSlow2 * fRec13[1]) + (fSlow3 * fRec12[1]));
+			fVec2[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec13[0]));
+			fRec12[0] = fVec2[((IOTA - 1277) & 2047)];
+			fRec15[0] = ((fSlow2 * fRec15[1]) + (fSlow3 * fRec14[1]));
+			fVec3[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec15[0]));
+			fRec14[0] = fVec3[((IOTA - 1356) & 2047)];
+			fRec17[0] = ((fSlow2 * fRec17[1]) + (fSlow3 * fRec16[1]));
+			fVec4[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec17[0]));
+			fRec16[0] = fVec4[((IOTA - 1422) & 2047)];
+			fRec19[0] = ((fSlow2 * fRec19[1]) + (fSlow3 * fRec18[1]));
+			fVec5[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec19[0]));
+			fRec18[0] = fVec5[((IOTA - 1491) & 2047)];
+			fRec21[0] = ((fSlow2 * fRec21[1]) + (fSlow3 * fRec20[1]));
+			fVec6[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec21[0]));
+			fRec20[0] = fVec6[((IOTA - 1557) & 2047)];
+			fRec23[0] = ((fSlow2 * fRec23[1]) + (fSlow3 * fRec22[1]));
+			fVec7[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec23[0]));
+			fRec22[0] = fVec7[((IOTA - 1617) & 2047)];
+			float fTemp3 = (((((((fRec8[0] + fRec10[0]) + fRec12[0]) + fRec14[0]) + fRec16[0]) + fRec18[0]) + fRec20[0]) + fRec22[0]);
+			fVec8[(IOTA & 1023)] = (fTemp3 + (0.5f * fRec6[1]));
 			fRec6[0] = fVec8[((IOTA - 556) & 1023)];
-			float fRec7 = (0.f - (fTemp1 - fRec6[1]));
+			float fRec7 = (0.f - (fTemp3 - fRec6[1]));
 			fVec9[(IOTA & 511)] = (fRec7 + (0.5f * fRec4[1]));
 			fRec4[0] = fVec9[((IOTA - 441) & 511)];
 			float fRec5 = (fRec4[1] - fRec7);
@@ -596,35 +692,35 @@ class Freeverb : public dsp {
 			fVec11[(IOTA & 255)] = (fRec3 + (0.5f * fRec0[1]));
 			fRec0[0] = fVec11[((IOTA - 225) & 255)];
 			float fRec1 = (fRec0[1] - fRec3);
-			output0[i] = FAUSTFLOAT(fRec1);
-			iRec33[0] = iRec33[1];
-			fVec12[(IOTA & 2047)] = (float(iRec33[0]) + fTemp0);
-			float fRec32 = fVec12[((IOTA - 1139) & 2047)];
-			iRec35[0] = iRec35[1];
-			fVec13[(IOTA & 2047)] = (float(iRec35[0]) + fTemp0);
-			float fRec34 = fVec13[((IOTA - 1211) & 2047)];
-			iRec37[0] = iRec37[1];
-			fVec14[(IOTA & 2047)] = (float(iRec37[0]) + fTemp0);
-			float fRec36 = fVec14[((IOTA - 1300) & 2047)];
-			iRec39[0] = iRec39[1];
-			fVec15[(IOTA & 2047)] = (float(iRec39[0]) + fTemp0);
-			float fRec38 = fVec15[((IOTA - 1379) & 2047)];
-			iRec41[0] = iRec41[1];
-			fVec16[(IOTA & 2047)] = (float(iRec41[0]) + fTemp0);
-			float fRec40 = fVec16[((IOTA - 1445) & 2047)];
-			iRec43[0] = iRec43[1];
-			fVec17[(IOTA & 2047)] = (float(iRec43[0]) + fTemp0);
-			float fRec42 = fVec17[((IOTA - 1514) & 2047)];
-			iRec45[0] = iRec45[1];
-			fVec18[(IOTA & 2047)] = (float(iRec45[0]) + fTemp0);
-			float fRec44 = fVec18[((IOTA - 1580) & 2047)];
-			iRec47[0] = iRec47[1];
-			fVec19[(IOTA & 2047)] = (float(iRec47[0]) + fTemp0);
-			float fRec46 = fVec19[((IOTA - 1640) & 2047)];
-			float fTemp2 = (((((((fRec32 + fRec34) + fRec36) + fRec38) + fRec40) + fRec42) + fRec44) + fRec46);
-			fVec20[(IOTA & 1023)] = (fTemp2 + (0.5f * fRec30[1]));
+			output0[i] = FAUSTFLOAT(((fSlow0 * fRec1) + (fSlow4 * fTemp0)));
+			fRec33[0] = ((fSlow2 * fRec33[1]) + (fSlow3 * fRec32[1]));
+			fVec12[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec33[0]));
+			fRec32[0] = fVec12[((IOTA - 1139) & 2047)];
+			fRec35[0] = ((fSlow2 * fRec35[1]) + (fSlow3 * fRec34[1]));
+			fVec13[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec35[0]));
+			fRec34[0] = fVec13[((IOTA - 1211) & 2047)];
+			fRec37[0] = ((fSlow2 * fRec37[1]) + (fSlow3 * fRec36[1]));
+			fVec14[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec37[0]));
+			fRec36[0] = fVec14[((IOTA - 1300) & 2047)];
+			fRec39[0] = ((fSlow2 * fRec39[1]) + (fSlow3 * fRec38[1]));
+			fVec15[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec39[0]));
+			fRec38[0] = fVec15[((IOTA - 1379) & 2047)];
+			fRec41[0] = ((fSlow2 * fRec41[1]) + (fSlow3 * fRec40[1]));
+			fVec16[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec41[0]));
+			fRec40[0] = fVec16[((IOTA - 1445) & 2047)];
+			fRec43[0] = ((fSlow2 * fRec43[1]) + (fSlow3 * fRec42[1]));
+			fVec17[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec43[0]));
+			fRec42[0] = fVec17[((IOTA - 1514) & 2047)];
+			fRec45[0] = ((fSlow2 * fRec45[1]) + (fSlow3 * fRec44[1]));
+			fVec18[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec45[0]));
+			fRec44[0] = fVec18[((IOTA - 1580) & 2047)];
+			fRec47[0] = ((fSlow2 * fRec47[1]) + (fSlow3 * fRec46[1]));
+			fVec19[(IOTA & 2047)] = (fTemp2 + (fSlow1 * fRec47[0]));
+			fRec46[0] = fVec19[((IOTA - 1640) & 2047)];
+			float fTemp4 = (((((((fRec32[0] + fRec34[0]) + fRec36[0]) + fRec38[0]) + fRec40[0]) + fRec42[0]) + fRec44[0]) + fRec46[0]);
+			fVec20[(IOTA & 1023)] = (fTemp4 + (0.5f * fRec30[1]));
 			fRec30[0] = fVec20[((IOTA - 579) & 1023)];
-			float fRec31 = (0.f - (fTemp2 - fRec30[1]));
+			float fRec31 = (0.f - (fTemp4 - fRec30[1]));
 			fVec21[(IOTA & 511)] = (fRec31 + (0.5f * fRec28[1]));
 			fRec28[0] = fVec21[((IOTA - 464) & 511)];
 			float fRec29 = (fRec28[1] - fRec31);
@@ -634,28 +730,44 @@ class Freeverb : public dsp {
 			fVec23[(IOTA & 255)] = (fRec27 + (0.5f * fRec24[1]));
 			fRec24[0] = fVec23[((IOTA - 248) & 255)];
 			float fRec25 = (fRec24[1] - fRec27);
-			output1[i] = FAUSTFLOAT(fRec25);
-			iRec9[1] = iRec9[0];
+			output1[i] = FAUSTFLOAT(((fSlow0 * fRec25) + (fSlow4 * fTemp1)));
+			fRec9[1] = fRec9[0];
 			IOTA = (IOTA + 1);
-			iRec11[1] = iRec11[0];
-			iRec13[1] = iRec13[0];
-			iRec15[1] = iRec15[0];
-			iRec17[1] = iRec17[0];
-			iRec19[1] = iRec19[0];
-			iRec21[1] = iRec21[0];
-			iRec23[1] = iRec23[0];
+			fRec8[1] = fRec8[0];
+			fRec11[1] = fRec11[0];
+			fRec10[1] = fRec10[0];
+			fRec13[1] = fRec13[0];
+			fRec12[1] = fRec12[0];
+			fRec15[1] = fRec15[0];
+			fRec14[1] = fRec14[0];
+			fRec17[1] = fRec17[0];
+			fRec16[1] = fRec16[0];
+			fRec19[1] = fRec19[0];
+			fRec18[1] = fRec18[0];
+			fRec21[1] = fRec21[0];
+			fRec20[1] = fRec20[0];
+			fRec23[1] = fRec23[0];
+			fRec22[1] = fRec22[0];
 			fRec6[1] = fRec6[0];
 			fRec4[1] = fRec4[0];
 			fRec2[1] = fRec2[0];
 			fRec0[1] = fRec0[0];
-			iRec33[1] = iRec33[0];
-			iRec35[1] = iRec35[0];
-			iRec37[1] = iRec37[0];
-			iRec39[1] = iRec39[0];
-			iRec41[1] = iRec41[0];
-			iRec43[1] = iRec43[0];
-			iRec45[1] = iRec45[0];
-			iRec47[1] = iRec47[0];
+			fRec33[1] = fRec33[0];
+			fRec32[1] = fRec32[0];
+			fRec35[1] = fRec35[0];
+			fRec34[1] = fRec34[0];
+			fRec37[1] = fRec37[0];
+			fRec36[1] = fRec36[0];
+			fRec39[1] = fRec39[0];
+			fRec38[1] = fRec38[0];
+			fRec41[1] = fRec41[0];
+			fRec40[1] = fRec40[0];
+			fRec43[1] = fRec43[0];
+			fRec42[1] = fRec42[0];
+			fRec45[1] = fRec45[0];
+			fRec44[1] = fRec44[0];
+			fRec47[1] = fRec47[0];
+			fRec46[1] = fRec46[0];
 			fRec30[1] = fRec30[0];
 			fRec28[1] = fRec28[0];
 			fRec26[1] = fRec26[0];
@@ -674,6 +786,9 @@ class Freeverb : public dsp {
 	#define FAUST_OUTPUTS 2
 	#define FAUST_ACTIVES 0
 	#define FAUST_PASSIVES 0
+	FAUST_ADDHORIZONTALSLIDER("Freeverb/Damp", fhslider2, 0.5f, 0.0f, 1.0f, 0.025f);
+	FAUST_ADDHORIZONTALSLIDER("Freeverb/RoomSize", fhslider1, 0.5f, 0.0f, 1.0f, 0.025f);
+	FAUST_ADDHORIZONTALSLIDER("Freeverb/Wet", fhslider0, 0.3333f, 0.0f, 1.0f, 0.025f);
 #endif
 
 int main(int argc, char *argv[])

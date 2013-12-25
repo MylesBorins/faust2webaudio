@@ -229,6 +229,7 @@ class Noise : public dsp {
   public:
 	
 	int iRec0[2];
+	FAUSTFLOAT fvslider0;
 	int fSamplingFreq;
 	
   public:
@@ -284,6 +285,7 @@ class Noise : public dsp {
 	
 	virtual void instanceInit(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
+		fvslider0 = FAUSTFLOAT(0.);
 		for (int i = 0; (i < 2); i = (i + 1)) {
 			iRec0[i] = 0;
 			
@@ -298,15 +300,18 @@ class Noise : public dsp {
 	
 	virtual void buildUserInterface(UI* interface) {
 		interface->openVerticalBox("noise");
+		interface->declare(&fvslider0, "style", "knob");
+		interface->addVerticalSlider("Volume", &fvslider0, 0.f, 0.f, 1.f, 0.1f);
 		interface->closeBox();
 		
 	}
 	
 	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 		FAUSTFLOAT* output0 = outputs[0];
+		float fSlow0 = (4.65661e-10f * float(fvslider0));
 		for (int i = 0; (i < count); i = (i + 1)) {
 			iRec0[0] = (12345 + (1103515245 * iRec0[1]));
-			output0[i] = FAUSTFLOAT((2.32831e-10f * float(iRec0[0])));
+			output0[i] = FAUSTFLOAT((fSlow0 * float(iRec0[0])));
 			iRec0[1] = iRec0[0];
 			
 		}
@@ -322,6 +327,7 @@ class Noise : public dsp {
 	#define FAUST_OUTPUTS 1
 	#define FAUST_ACTIVES 0
 	#define FAUST_PASSIVES 0
+	FAUST_ADDVERTICALSLIDER("noise/Volume", fvslider0, 0.0f, 0.0f, 1.0f, 0.1f);
 #endif
 
 int main(int argc, char *argv[])
