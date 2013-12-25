@@ -5,7 +5,7 @@
 #include <string>
 
 extern "C" {
-    typedef std::map<std::string, int> UImap;
+    typedef std::map<std::string, FAUSTFLOAT*> UImap;
     class JSUI : public UI
     {
 
@@ -39,7 +39,7 @@ extern "C" {
         
         void insertMap(const char* label, FAUSTFLOAT* zone)
         {
-            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+            uiMap.insert( std::pair<std::string, FAUSTFLOAT*>(label, zone));
         }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
@@ -105,16 +105,15 @@ extern "C" {
         return n->ui->uiMap.size();
     }
     
-    int DSP_getNextParam(Dsp_wrap *n, std::string *key, FAUSTFLOAT* zone)
+    FAUSTFLOAT* DSP_getNextParam(Dsp_wrap *n, std::string *key)
     {
+        key->append(n->ui->iter->first);
         n->ui->iter++;
         if (n->ui->iter == n->ui->uiMap.end())
         {
             n->ui->iter = n->ui->uiMap.begin();
-            return 0;
-            
         }
-        return 1;
+        return n->ui->iter->second;
     }
     
     int DSP_compute(Dsp_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {

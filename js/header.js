@@ -13,10 +13,8 @@ licenses are at the root directory.
 
 */
 
-/*global webkitAudioContext, Module, HEAPF32*/
+/*global webkitAudioContext, Module, HEAPF32, HEAP32, Pointer_stringify, ALLOC_STACK, intArrayFromString, allocate*/
 
 var faust = faust || {};
 
 (function () {
-
-    // This should be made to only make a new context if one does not exist
