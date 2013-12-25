@@ -547,10 +547,10 @@ extern "C" {
         return n->ui->uiMap.size();
     }
     
-    FAUSTFLOAT* OSC_getNextParam(Osc_wrap *n, std::string *key)
+    FAUSTFLOAT* OSC_getNextParam(Osc_wrap *n, char *key)
     {
         FAUSTFLOAT* valPtr = n->ui->iter->second;
-        key->append(n->ui->iter->first);
+        strcpy(key, n->ui->iter->first.c_str());
         n->ui->iter++;
         if (n->ui->iter == n->ui->uiMap.end())
         {
