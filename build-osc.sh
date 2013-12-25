@@ -2,6 +2,7 @@
 # tputcolors
 
 # Adapted From https://gist.github.com/camupod/5640386
+set -e
 echo 'Compiling From Faust -> CPP'
 faust -a minimal.cpp -i -uim -cn Osc  dsp/osc.dsp -o cpp/faust-osc-temp.cpp
 sed -e "s/max/fmax/g" -e "s/min/fmin/g" cpp/faust-osc-temp.cpp > cpp/faust-osc.cpp

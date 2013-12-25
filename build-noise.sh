@@ -2,6 +2,7 @@
 # tputcolors
 
 # Adapted From https://gist.github.com/camupod/5640386
+set -e
 echo 'Compiling From Faust -> CPP'
 faust -a minimal.cpp -i -uim -cn Noise  dsp/noise.dsp -o cpp/faust-noise.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
