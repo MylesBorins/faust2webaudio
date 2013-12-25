@@ -5,12 +5,17 @@
 #include <string>
 
 extern "C" {
+    typedef std::map<std::string, int> UImap;
     class JSUI : public UI
     {
 
      public:
         JSUI() {};
         ~JSUI() {};
+        
+    public:
+        UImap uiMap;
+    public:
         // -- widget's layouts
         void openTabBox(const char* label)
         {
@@ -30,26 +35,31 @@ extern "C" {
         };
 
         // -- active widgets
+        
+        void insertMap(const char* label, FAUSTFLOAT* zone)
+        {
+            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+        }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addCheckButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
         void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-
+            insertMap(label, zone);
         };
         void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
 
         // -- passive widgets
@@ -69,39 +79,54 @@ extern "C" {
         };
     };
     
+    class Dsp_wrap : public Dsp
+    {
+    public:
+        JSUI *ui;
+    };
+    
     //constructor
     void *DSP_constructor(int samplingFreq) {
         
         // Make a new dsp object
-        Dsp* n = new Dsp();
-        JSUI* ui = new JSUI();
+        Dsp_wrap* n = new Dsp_wrap();
+        n->ui = new JSUI();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
-        n->buildUserInterface(ui);
+        n->buildUserInterface(n->ui);
 
         return n;
     }
+
+    int DSP_getNumParams(Dsp_wrap *n)
+    {
+        return n->ui->uiMap.size();
+    }
     
+    // void DSP_get_labels(Dsp_wrap *n)
+    // {
+    // 
+    // }
     // void DSP_UI_INIT(Dsp *n) {
     //     typedef std::map<std::string, double> UImap;
     //     UImap uiMap;
     //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
     // }
     
-    int DSP_compute(Dsp *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int DSP_compute(Dsp_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
     }
     
-    int DSP_getNumInputs(Dsp *n){
+    int DSP_getNumInputs(Dsp_wrap *n){
         return n->getNumInputs();
     }
     
-    int DSP_getNumOutputs(Dsp *n){
+    int DSP_getNumOutputs(Dsp_wrap *n){
         return n->getNumOutputs();
     }
 
-    void DSP_destructor(Dsp *n) {
+    void DSP_destructor(Dsp_wrap *n) {
         delete n;
     }
 }

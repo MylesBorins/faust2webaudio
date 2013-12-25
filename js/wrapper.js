@@ -7,8 +7,9 @@
     var DSP_constructor = Module.cwrap('DSP_constructor', 'number', 'number');
     var DSP_destructor = Module.cwrap('DSP_destructor', null, ['number']);
     var DSP_compute = Module.cwrap('DSP_compute', ['number'], ['number', 'number', 'number', 'number']);
-    var DSP_getNumInputs = Module.cwrap('DSP_getNumInputs', 'number', []);
-    var DSP_getNumOutputs = Module.cwrap('DSP_getNumOutputs', 'number', []);
+    var DSP_getNumInputs = Module.cwrap('DSP_getNumInputs', 'number', 'number');
+    var DSP_getNumOutputs = Module.cwrap('DSP_getNumOutputs', 'number', 'number');
+    var DSP_getNumParams = Module.cwrap('DSP_getNumParams', 'number', 'number');
 
     faust.dsp = function () {
         var that = {};
