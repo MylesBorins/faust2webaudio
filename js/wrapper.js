@@ -9,7 +9,11 @@
     var DSP_compute = Module.cwrap('DSP_compute', ['number'], ['number', 'number', 'number', 'number']);
     var DSP_getNumInputs = Module.cwrap('DSP_getNumInputs', 'number', []);
     var DSP_getNumOutputs = Module.cwrap('DSP_getNumOutputs', 'number', []);
-
+    
+    var _addHS = function (name, pointer) {
+      console.log(Pointer_stringify(name) + ": " + HEAPF32[pointer>>2]);
+    };
+    
     faust.dsp = function () {
         var that = {};
 
