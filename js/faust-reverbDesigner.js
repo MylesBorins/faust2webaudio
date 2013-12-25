@@ -87591,7 +87591,14 @@ run();
     
     // Connect to another node
     that.connect = function (node) {
-      that.jsNode.connect(node);
+      if (node.jsNode)
+      {
+        that.jsNode.connect(node.jsNode);
+      }
+      else {
+        that.jsNode.connect(node);
+      }
+      
     };
 
     // Bind to Web Audio
