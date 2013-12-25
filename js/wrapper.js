@@ -10,6 +10,7 @@
     var DSP_getNumInputs = Module.cwrap('DSP_getNumInputs', 'number', 'number');
     var DSP_getNumOutputs = Module.cwrap('DSP_getNumOutputs', 'number', 'number');
     var DSP_getNumParams = Module.cwrap('DSP_getNumParams', 'number', 'number');
+    var DSP_getNextParam = Module.cwrap('DSP_getNextParam', 'number', ['number', 'number', 'number']);
 
     faust.dsp = function () {
         var that = {};
