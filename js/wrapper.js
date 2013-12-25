@@ -84,7 +84,7 @@
         //TODO keyptr is allocated on stack, but is it properly freed?
         var keyPtr = allocate(intArrayFromString(''), 'i8', ALLOC_STACK);
         var valPtr = DSP_getNextParam(that.ptr, keyPtr);
-        var key = '' + Pointer_stringify(keyPtr) + '';
+        var key = Pointer_stringify(keyPtr);
         
         //TODO calling key.substr(1,key.length) is janky but fixes problem
         //     with how emscripten returns strings... will probably break at some point

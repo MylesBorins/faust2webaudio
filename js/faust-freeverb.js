@@ -63887,9 +63887,13 @@ run();
       var i;
       var numParams = FREEVERB_getNumParams(that.ptr);
       for (i = 0; i < numParams; i++) {
+        //TODO keyptr is allocated on stack, but is it properly freed?
         var keyPtr = allocate(intArrayFromString(''), 'i8', ALLOC_STACK);
         var valPtr = FREEVERB_getNextParam(that.ptr, keyPtr);
-        var key = '' + Pointer_stringify(keyPtr) + '';
+        var key = Pointer_stringify(keyPtr);
+        
+        //TODO calling key.substr(1,key.length) is janky but fixes problem
+        //     with how emscripten returns strings... will probably break at some point
         that.model[key.substr(1,key.length)] = valPtr;
       }
     };
@@ -63912,6 +63916,7 @@ run();
       that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
       that.jsNode.onaudioprocess = that.compute;
       
+      // TODO the below calls to malloc are not yet being freed, potential memory leak
       // allocate memory for input / output arrays
       that.ins = Module._malloc(that.ptrsize * that.numIn);
       
