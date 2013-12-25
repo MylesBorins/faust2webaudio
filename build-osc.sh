@@ -13,7 +13,7 @@ sed -e "s/DSP/OSC/g" -e "s/Dsp/Osc/g" -e "s/dsp/osc/g" cpp/faust-wrapper.cpp >> 
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Using emscripten to compile to JavaScript"
 emcc cpp/faust-osc.cpp -o js/faust-osc-temp.js \
--s EXPORTED_FUNCTIONS="['_OSC_constructor','_OSC_destructor','_OSC_compute', '_OSC_getNumInputs', '_OSC_getNumOutputs']"
+-s EXPORTED_FUNCTIONS="['_OSC_constructor','_OSC_destructor','_OSC_compute', '_OSC_getNumInputs', '_OSC_getNumOutputs', '_OSC_getNumParams']"
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping js"
 cat js/header.js > js/faust-osc.js
