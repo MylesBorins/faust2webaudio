@@ -20,7 +20,6 @@ Currently there are a couple of issues with this compiler that need to be done
 * Implement generic build script
 * Solve issue involving linking so each ugen does not need to have a complete instance of the emscripten vm
 that.setupModel and that.init
-* Pointer_stringify returns string with ghost first character, this has been reported to emscripten, but will need to be updated once it has been fixed on the emscripten end
 * Implement method to attach ugens to variables in the model to allow for more advanced signal flow
 
 ##Licensing
