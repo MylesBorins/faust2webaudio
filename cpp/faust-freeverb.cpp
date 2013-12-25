@@ -690,12 +690,17 @@ int main(int argc, char *argv[])
 #include <string>
 
 extern "C" {
+    typedef std::map<std::string, int> UImap;
     class JSUI : public UI
     {
 
      public:
         JSUI() {};
         ~JSUI() {};
+        
+    public:
+        UImap uiMap;
+    public:
         // -- widget's layouts
         void openTabBox(const char* label)
         {
@@ -715,26 +720,31 @@ extern "C" {
         };
 
         // -- active widgets
+        
+        void insertMap(const char* label, FAUSTFLOAT* zone)
+        {
+            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+        }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addCheckButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
         void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-
+            insertMap(label, zone);
         };
         void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
 
         // -- passive widgets
@@ -754,39 +764,54 @@ extern "C" {
         };
     };
     
+    class Freeverb_wrap : public Freeverb
+    {
+    public:
+        JSUI *ui;
+    };
+    
     //constructor
     void *FREEVERB_constructor(int samplingFreq) {
         
         // Make a new freeverb object
-        Freeverb* n = new Freeverb();
-        JSUI* ui = new JSUI();
+        Freeverb_wrap* n = new Freeverb_wrap();
+        n->ui = new JSUI();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
-        n->buildUserInterface(ui);
+        n->buildUserInterface(n->ui);
 
         return n;
     }
+
+    int FREEVERB_getNumParams(Freeverb_wrap *n)
+    {
+        return n->ui->uiMap.size();
+    }
     
+    // void FREEVERB_get_labels(Freeverb_wrap *n)
+    // {
+    // 
+    // }
     // void FREEVERB_UI_INIT(Freeverb *n) {
     //     typedef std::map<std::string, double> UImap;
     //     UImap uiMap;
     //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
     // }
     
-    int FREEVERB_compute(Freeverb *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int FREEVERB_compute(Freeverb_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
     }
     
-    int FREEVERB_getNumInputs(Freeverb *n){
+    int FREEVERB_getNumInputs(Freeverb_wrap *n){
         return n->getNumInputs();
     }
     
-    int FREEVERB_getNumOutputs(Freeverb *n){
+    int FREEVERB_getNumOutputs(Freeverb_wrap *n){
         return n->getNumOutputs();
     }
 
-    void FREEVERB_destructor(Freeverb *n) {
+    void FREEVERB_destructor(Freeverb_wrap *n) {
         delete n;
     }
 }

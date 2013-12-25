@@ -447,12 +447,17 @@ int main(int argc, char *argv[])
 #include <string>
 
 extern "C" {
+    typedef std::map<std::string, int> UImap;
     class JSUI : public UI
     {
 
      public:
         JSUI() {};
         ~JSUI() {};
+        
+    public:
+        UImap uiMap;
+    public:
         // -- widget's layouts
         void openTabBox(const char* label)
         {
@@ -472,26 +477,31 @@ extern "C" {
         };
 
         // -- active widgets
+        
+        void insertMap(const char* label, FAUSTFLOAT* zone)
+        {
+            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+        }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addCheckButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
         void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-
+            insertMap(label, zone);
         };
         void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
 
         // -- passive widgets
@@ -511,39 +521,54 @@ extern "C" {
         };
     };
     
+    class Osc_wrap : public Osc
+    {
+    public:
+        JSUI *ui;
+    };
+    
     //constructor
     void *OSC_constructor(int samplingFreq) {
         
         // Make a new osc object
-        Osc* n = new Osc();
-        JSUI* ui = new JSUI();
+        Osc_wrap* n = new Osc_wrap();
+        n->ui = new JSUI();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
-        n->buildUserInterface(ui);
+        n->buildUserInterface(n->ui);
 
         return n;
     }
+
+    int OSC_getNumParams(Osc_wrap *n)
+    {
+        return n->ui->uiMap.size();
+    }
     
+    // void OSC_get_labels(Osc_wrap *n)
+    // {
+    // 
+    // }
     // void OSC_UI_INIT(Osc *n) {
     //     typedef std::map<std::string, double> UImap;
     //     UImap uiMap;
     //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
     // }
     
-    int OSC_compute(Osc *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int OSC_compute(Osc_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
     }
     
-    int OSC_getNumInputs(Osc *n){
+    int OSC_getNumInputs(Osc_wrap *n){
         return n->getNumInputs();
     }
     
-    int OSC_getNumOutputs(Osc *n){
+    int OSC_getNumOutputs(Osc_wrap *n){
         return n->getNumOutputs();
     }
 
-    void OSC_destructor(Osc *n) {
+    void OSC_destructor(Osc_wrap *n) {
         delete n;
     }
 }

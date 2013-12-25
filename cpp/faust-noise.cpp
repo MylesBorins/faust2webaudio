@@ -338,12 +338,17 @@ int main(int argc, char *argv[])
 #include <string>
 
 extern "C" {
+    typedef std::map<std::string, int> UImap;
     class JSUI : public UI
     {
 
      public:
         JSUI() {};
         ~JSUI() {};
+        
+    public:
+        UImap uiMap;
+    public:
         // -- widget's layouts
         void openTabBox(const char* label)
         {
@@ -363,26 +368,31 @@ extern "C" {
         };
 
         // -- active widgets
+        
+        void insertMap(const char* label, FAUSTFLOAT* zone)
+        {
+            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+        }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addCheckButton(const char* label, FAUSTFLOAT* zone)
         {
-            
+            insertMap(label, zone);
         };
         void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
         void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-
+            insertMap(label, zone);
         };
         void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            
+            insertMap(label, zone);
         };
 
         // -- passive widgets
@@ -402,39 +412,54 @@ extern "C" {
         };
     };
     
+    class Noise_wrap : public Noise
+    {
+    public:
+        JSUI *ui;
+    };
+    
     //constructor
     void *NOISE_constructor(int samplingFreq) {
         
         // Make a new noise object
-        Noise* n = new Noise();
-        JSUI* ui = new JSUI();
+        Noise_wrap* n = new Noise_wrap();
+        n->ui = new JSUI();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
-        n->buildUserInterface(ui);
+        n->buildUserInterface(n->ui);
 
         return n;
     }
+
+    int NOISE_getNumParams(Noise_wrap *n)
+    {
+        return n->ui->uiMap.size();
+    }
     
+    // void NOISE_get_labels(Noise_wrap *n)
+    // {
+    // 
+    // }
     // void NOISE_UI_INIT(Noise *n) {
     //     typedef std::map<std::string, double> UImap;
     //     UImap uiMap;
     //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
     // }
     
-    int NOISE_compute(Noise *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int NOISE_compute(Noise_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
     }
     
-    int NOISE_getNumInputs(Noise *n){
+    int NOISE_getNumInputs(Noise_wrap *n){
         return n->getNumInputs();
     }
     
-    int NOISE_getNumOutputs(Noise *n){
+    int NOISE_getNumOutputs(Noise_wrap *n){
         return n->getNumOutputs();
     }
 
-    void NOISE_destructor(Noise *n) {
+    void NOISE_destructor(Noise_wrap *n) {
         delete n;
     }
 }
