@@ -57,9 +57,9 @@ allpasstuningL4 = 225;
 // Dry : original signal
 // Wet : reverberated signal
 
-dampSlider      = 1;
-roomsizeSlider  = 1;
-wetSlider       = 1;
+dampSlider      = hslider("Damp",0.5, 0, 1, 0.025)*scaledamp;
+roomsizeSlider  = hslider("RoomSize", 0.5, 0, 1, 0.025)*scaleroom + offsetroom;
+wetSlider       = hslider("Wet", 0.3333, 0, 1, 0.025);
 combfeed        = roomsizeSlider;
 
 
@@ -71,7 +71,7 @@ allpass(dt,fb) = (_,_ <: (*(fb),_:+:@(dt)), -) ~ _ : (!,_);
 comb(dt, fb, damp) = (+:@(dt)) ~ (*(1-damp) : (+ ~ *(damp)) : *(fb));
 
 
-// Reverb components  
+// Reverb components
 //------------------
 
 monoReverb(fb1, fb2, damp, spread)
