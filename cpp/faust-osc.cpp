@@ -549,13 +549,14 @@ extern "C" {
     
     FAUSTFLOAT* OSC_getNextParam(Osc_wrap *n, std::string *key)
     {
+        FAUSTFLOAT* valPtr = n->ui->iter->second;
         key->append(n->ui->iter->first);
         n->ui->iter++;
         if (n->ui->iter == n->ui->uiMap.end())
         {
             n->ui->iter = n->ui->uiMap.begin();
         }
-        return n->ui->iter->second;
+        return valPtr;
     }
     
     int OSC_compute(Osc_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {

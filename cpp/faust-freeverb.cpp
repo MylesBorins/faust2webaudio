@@ -690,7 +690,7 @@ int main(int argc, char *argv[])
 #include <string>
 
 extern "C" {
-    typedef std::map<std::string, int> UImap;
+    typedef std::map<std::string, FAUSTFLOAT*> UImap;
     class JSUI : public UI
     {
 
@@ -700,6 +700,7 @@ extern "C" {
         
     public:
         UImap uiMap;
+        UImap::iterator iter;
     public:
         // -- widget's layouts
         void openTabBox(const char* label)
@@ -723,7 +724,7 @@ extern "C" {
         
         void insertMap(const char* label, FAUSTFLOAT* zone)
         {
-            uiMap.insert( std::pair<std::string, int>(label, (int)zone));
+            uiMap.insert( std::pair<std::string, FAUSTFLOAT*>(label, zone));
         }
 
         void addButton(const char* label, FAUSTFLOAT* zone)
@@ -779,6 +780,7 @@ extern "C" {
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
         n->buildUserInterface(n->ui);
+        n->ui->iter = n->ui->uiMap.begin();
 
         return n;
     }
@@ -788,15 +790,17 @@ extern "C" {
         return n->ui->uiMap.size();
     }
     
-    // void FREEVERB_get_labels(Freeverb_wrap *n)
-    // {
-    // 
-    // }
-    // void FREEVERB_UI_INIT(Freeverb *n) {
-    //     typedef std::map<std::string, double> UImap;
-    //     UImap uiMap;
-    //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
-    // }
+    FAUSTFLOAT* FREEVERB_getNextParam(Freeverb_wrap *n, std::string *key)
+    {
+        FAUSTFLOAT* valPtr = n->ui->iter->second;
+        key->append(n->ui->iter->first);
+        n->ui->iter++;
+        if (n->ui->iter == n->ui->uiMap.end())
+        {
+            n->ui->iter = n->ui->uiMap.begin();
+        }
+        return valPtr;
+    }
     
     int FREEVERB_compute(Freeverb_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
