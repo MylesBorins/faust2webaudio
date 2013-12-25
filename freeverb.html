@@ -26,6 +26,10 @@
     var noise = faust.noise();
     var freeverb = faust.freeverb();
     noise.connect(freeverb.jsNode);
+    noise.update("Volume", 0.1);
+    freeverb.update("Damp", 0.75);
+    freeverb.update("RoomSiz", 0.75);
+    freeverb.update("Wet", 0.75);
     freeverb.play();
 
     </script>
