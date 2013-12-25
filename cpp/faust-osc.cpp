@@ -381,7 +381,7 @@ class Osc : public dsp {
 			
 		}
 		fConst0 = (1.f / float(fmin(192000, fmax(1, fSamplingFreq))));
-		fhslider1 = FAUSTFLOAT(1000.);
+		fhslider1 = FAUSTFLOAT(220.);
 		for (int i = 0; (i < 2); i = (i + 1)) {
 			fRec2[i] = 0.f;
 			
@@ -397,7 +397,7 @@ class Osc : public dsp {
 	virtual void buildUserInterface(UI* interface) {
 		interface->openVerticalBox("Oscillator");
 		interface->declare(&fhslider1, "unit", "Hz");
-		interface->addHorizontalSlider("freq", &fhslider1, 1000.f, 20.f, 24000.f, 1.f);
+		interface->addHorizontalSlider("freq", &fhslider1, 220.f, 20.f, 24000.f, 1.f);
 		interface->declare(&fhslider0, "unit", "dB");
 		interface->addHorizontalSlider("volume", &fhslider0, 0.f, -96.f, 0.f, 0.1f);
 		interface->closeBox();
@@ -429,7 +429,7 @@ class Osc : public dsp {
 	#define FAUST_OUTPUTS 1
 	#define FAUST_ACTIVES 0
 	#define FAUST_PASSIVES 0
-	FAUST_ADDHORIZONTALSLIDER("Oscillator/freq", fhslider1, 1e+03f, 2e+01f, 2.4e+04f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("Oscillator/freq", fhslider1, 2.2e+02f, 2e+01f, 2.4e+04f, 1.0f);
 	FAUST_ADDHORIZONTALSLIDER("Oscillator/volume", fhslider0, 0.0f, -96.0f, 0.0f, 0.1f);
 #endif
 
@@ -445,13 +445,85 @@ int main(int argc, char *argv[])
 #include <emscripten.h>
 
 extern "C" {
+    extern void addHS(const char* label, FAUSTFLOAT* zone);
+    
+    class JSUI : public UI
+    {
+
+     public:
+
+    	JSUI() {};
+
+    	~JSUI() {};
+
+        // -- widget's layouts
+
+        void openTabBox(const char* label)
+        {
+            
+        };
+        void openHorizontalBox(const char* label)
+        {
+
+        };
+        void openVerticalBox(const char* label)
+        {
+            
+        };
+        void closeBox()
+        {
+            
+        };
+
+        // -- active widgets
+
+        void addButton(const char* label, FAUSTFLOAT* zone)
+        {
+            
+        };
+        void addCheckButton(const char* label, FAUSTFLOAT* zone)
+        {
+            
+        };
+        void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
+        {
+            
+        };
+        void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
+        {
+            addHS(label, zone);
+        };
+        void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
+        {
+            
+        };
+
+        // -- passive widgets
+
+        void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT fmin, FAUSTFLOAT fmax)
+        {
+        };
+        void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT fmin, FAUSTFLOAT fmax)
+        {
+        };
+
+    	// -- metadata declarations
+
+        void declare(FAUSTFLOAT* zone, const char* key, const char* val)
+        {
+            
+        };
+    };
+    
     //constructor
     void *OSC_constructor(int samplingFreq) {
         
         // Make a new osc object
         Osc* n = new Osc();
+        JSUI* ui = new JSUI();
         // Init it with samplingFreq supplied... should we give a sample size here too?
         n->init(samplingFreq);
+        n->buildUserInterface(ui);
 
         return n;
     }
@@ -473,6 +545,8 @@ extern "C" {
         delete n;
     }
 }
+
+
 
 // EM_ASM(
 //     
