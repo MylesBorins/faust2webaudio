@@ -1308,7 +1308,6 @@ function copyTempDouble(ptr) {
     }var _llvm_memset_p0i8_i32=_memset;
   function ___gxx_personality_v0() {
     }
-;
   function ___cxa_pure_virtual() {
       ABORT = true;
       throw 'Pure virtual function called!';
@@ -4696,9 +4695,6 @@ function __ZN4JSUI19addHorizontalSliderEPKcPfffff($this,$label,$zone,$init,$fmin
  $fmax_addr=$fmax;
  $step_addr=$step;
  var $this1=$this_addr;
- var $0=$label_addr;
- var $1=$zone_addr;
- _addHS($0,$1);
  return;
 }
 function __ZN4JSUI11addNumEntryEPKcPfffff($this,$label,$zone,$init,$fmin,$fmax,$step){
@@ -9435,11 +9431,7 @@ run();
     var OSC_compute = Module.cwrap('OSC_compute', ['number'], ['number', 'number', 'number', 'number']);
     var OSC_getNumInputs = Module.cwrap('OSC_getNumInputs', 'number', []);
     var OSC_getNumOutputs = Module.cwrap('OSC_getNumOutputs', 'number', []);
-    
-    var _addHS = function (name, pointer) {
-      console.log(Pointer_stringify(name) + ": " + HEAPF32[pointer>>2]);
-    };
-    
+
     faust.osc = function () {
         var that = {};
 

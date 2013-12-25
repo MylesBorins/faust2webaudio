@@ -443,21 +443,17 @@ int main(int argc, char *argv[])
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
 #include <emscripten.h>
+#include <map>
+#include <string>
 
 extern "C" {
-    extern void addHS(const char* label, FAUSTFLOAT* zone);
-    
     class JSUI : public UI
     {
 
      public:
-
-    	JSUI() {};
-
-    	~JSUI() {};
-
+        JSUI() {};
+        ~JSUI() {};
         // -- widget's layouts
-
         void openTabBox(const char* label)
         {
             
@@ -491,7 +487,7 @@ extern "C" {
         };
         void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
-            addHS(label, zone);
+
         };
         void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
         {
@@ -528,6 +524,12 @@ extern "C" {
         return n;
     }
     
+    // void OSC_UI_INIT(Osc *n) {
+    //     typedef std::map<std::string, double> UImap;
+    //     UImap uiMap;
+    //     uiMap.insert( std::pair<std::string, double>("test", 123.456));
+    // }
+    
     int OSC_compute(Osc *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
         n->compute(count, inputs, outputs);
         return 1;
@@ -545,9 +547,3 @@ extern "C" {
         delete n;
     }
 }
-
-
-
-// EM_ASM(
-//     
-// );
