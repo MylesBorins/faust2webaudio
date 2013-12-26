@@ -17,7 +17,9 @@ licenses are at the root directory.
 
 var faust = faust || {};
 
-(function () {// Note: Some Emscripten settings will significantly limit the speed of the generated code.
+(function () {
+
+// Note: Some Emscripten settings will significantly limit the speed of the generated code.
 // Note: Some Emscripten settings may limit the speed of the generated code.
 // The Module object: Our interface to the outside world. We import
 // and export values on it, and do the work to get that through
@@ -63744,7 +63746,8 @@ if (Module['noInitialRun']) {
 run();
 // {{POST_RUN_ADDITIONS}}
 // {{MODULE_ADDITIONS}}
-//@ sourceMappingURL=faust-freeverb-temp.js.map  // This should be made to only make a new context if one does not exist
+//@ sourceMappingURL=faust-freeverb-temp.js.map
+  // This should be made to only make a new context if one does not exist
 
   if (!faust.context)
   {
