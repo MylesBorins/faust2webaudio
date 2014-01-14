@@ -63766,6 +63766,7 @@ run();
     var that = {};
     
     that.model = {
+      playing: false
     };
 
     that.ptr = FREEVERB_constructor(faust.context.sampleRate);
@@ -63805,10 +63806,12 @@ run();
           output[j] = freeverbOutput[j];
         }
       }
+      return that;
     };
 
     that.destroy = function () {
       FREEVERB_destructor(that.ptr);
+      return that;
     };
     
     // Connect to another node
@@ -63820,18 +63823,32 @@ run();
       else {
         that.jsNode.connect(node);
       }
-      
+      return that;
     };
 
     // Bind to Web Audio
 
     that.play = function () {
       that.jsNode.connect(faust.context.destination);
+      that.model.playing = true;
+      return that;
     };
 
     that.pause = function () {
       that.jsNode.disconnect(faust.context.destination);
+      that.model.playing = false;
+      return that;
     };
+    
+    that.toggle = function() {
+      if (that.model.playing) {
+        that.pause()
+      }
+      else {
+        that.play();
+      }
+      return that;
+    }
 
     that.setupModel = function () {
       var i;
@@ -63843,10 +63860,12 @@ run();
         var key = Pointer_stringify(keyPtr);
         that.model[key] = valPtr;
       }
+      return that;
     };
     
     that.update = function (key, val) {
       HEAPF32[that.model[key] >> 2] = val;
+      return that;
     };
 
     that.init = function () {
@@ -63876,6 +63895,7 @@ run();
         HEAP32[(that.outs >> 2) + i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
       }
       that.setupModel();
+      return that;
     };
 
     that.init();
