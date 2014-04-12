@@ -21,6 +21,7 @@ Currently there are a couple of issues with this compiler that need to be done
 * Solve issue involving linking so each ugen does not need to have a complete instance of the emscripten vm
 that.setupModel and that.init
 * Implement method to attach ugens to variables in the model to allow for more advanced signal flow
+* Test speed of code when compiled with -O3 and put through closure compiler
 
 ##Licensing
 
