@@ -1,15 +1,14 @@
 //-----------------------------------------------------
-// author: "Grame"
-// copyright: "(c)GRAME 2009"
-// license: "BSD"
 // name: "osc"
 // version: "1.0"
+// author: "Grame"
+// license: "BSD"
+// copyright: "(c)GRAME 2009"
 //
-// Code generated with Faust 2.0.a11 (http://faust.grame.fr)
+// Code generated with Faust 0.9.67 (http://faust.grame.fr)
 //-----------------------------------------------------
-
-#ifndef  __Osc_H__
-#define  __Osc_H__
+/* link with  */
+#include <math.h>
 /************************************************************************
  ************************************************************************
     FAUST Architecture File
@@ -29,6 +28,9 @@
  ************************************************************************/
 
 #include <cmath>
+
+#ifndef FAUST_GUI_H
+#define FAUST_GUI_H
 
 #ifndef FAUST_UI_H
 #define FAUST_UI_H
@@ -74,8 +76,184 @@ class UI
 
 	// -- metadata declarations
 
-    virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
+    virtual void declare(FAUSTFLOAT*, const char*, const char*) {}
 };
+
+#endif
+#include <list>
+#include <map>
+
+/*******************************************************************************
+ * GUI : Abstract Graphic User Interface
+ * Provides additional macchanismes to synchronize widgets and zones. Widgets
+ * should both reflect the value of a zone and allow to change this value.
+ ******************************************************************************/
+
+class uiItem;
+typedef void (*uiCallback)(FAUSTFLOAT val, void* data);
+
+class clist : public std::list<uiItem*>
+{
+    public:
+    
+        virtual ~clist();
+        
+};
+
+class GUI : public UI
+{
+    
+	typedef std::map<FAUSTFLOAT*, clist*> zmap;
+	
+ private:
+ 	static std::list<GUI*>	fGuiList;
+	zmap                    fZoneMap;
+	bool                    fStopped;
+	
+ public:
+		
+    GUI() : fStopped(false) 
+    {	
+		fGuiList.push_back(this);
+	}
+	
+    virtual ~GUI() 
+    {   
+        // delete all 
+        zmap::iterator g;
+        for (g = fZoneMap.begin(); g != fZoneMap.end(); g++) {
+            delete (*g).second;
+        }
+        // suppress 'this' in static fGuiList
+        fGuiList.remove(this);
+    }
+
+	// -- registerZone(z,c) : zone management
+	
+	void registerZone(FAUSTFLOAT* z, uiItem* c)
+	{
+		if (fZoneMap.find(z) == fZoneMap.end()) fZoneMap[z] = new clist();
+		fZoneMap[z]->push_back(c);
+	} 	
+
+	void updateAllZones();
+	
+	void updateZone(FAUSTFLOAT* z);
+	
+	static void updateAllGuis()
+	{
+		std::list<GUI*>::iterator g;
+		for (g = fGuiList.begin(); g != fGuiList.end(); g++) {
+			(*g)->updateAllZones();
+		}
+	}
+    void addCallback(FAUSTFLOAT* zone, uiCallback foo, void* data);
+    virtual void show() {};	
+    virtual void run() {};
+	
+	void stop()		{ fStopped = true; }
+	bool stopped() 	{ return fStopped; }
+
+    virtual void declare(FAUSTFLOAT* , const char* , const char* ) {}
+};
+
+/**
+ * User Interface Item: abstract definition
+ */
+
+class uiItem
+{
+  protected :
+		  
+	GUI*            fGUI;
+	FAUSTFLOAT*		fZone;
+	FAUSTFLOAT		fCache;
+	
+	uiItem (GUI* ui, FAUSTFLOAT* zone) : fGUI(ui), fZone(zone), fCache(-123456.654321) 
+	{ 
+ 		ui->registerZone(zone, this); 
+ 	}
+	
+  public :
+  
+	virtual ~uiItem() 
+    {}
+	
+	void modifyZone(FAUSTFLOAT v) 	
+	{ 
+		fCache = v;
+		if (*fZone != v) {
+			*fZone = v;
+			fGUI->updateZone(fZone);
+		}
+	}
+		  	
+	FAUSTFLOAT		cache()			{ return fCache; }
+	virtual void 	reflectZone() 	= 0;	
+};
+
+/**
+ * Callback Item
+ */
+
+struct uiCallbackItem : public uiItem
+{
+	uiCallback	fCallback;
+	void*		fData;
+	
+	uiCallbackItem(GUI* ui, FAUSTFLOAT* zone, uiCallback foo, void* data) 
+			: uiItem(ui, zone), fCallback(foo), fData(data) {}
+	
+	virtual void 	reflectZone() {		
+		FAUSTFLOAT 	v = *fZone;
+		fCache = v; 
+		fCallback(v, fData);	
+	}
+};
+
+// en cours d'installation de call back. a finir!!!!!
+
+/**
+ * Update all user items reflecting zone z
+ */
+
+inline void GUI::updateZone(FAUSTFLOAT* z)
+{
+	FAUSTFLOAT 	v = *z;
+	clist* 	l = fZoneMap[z];
+	for (clist::iterator c = l->begin(); c != l->end(); c++) {
+		if ((*c)->cache() != v) (*c)->reflectZone();
+	}
+}
+
+/**
+ * Update all user items not up to date
+ */
+
+inline void GUI::updateAllZones()
+{
+	for (zmap::iterator m = fZoneMap.begin(); m != fZoneMap.end(); m++) {
+		FAUSTFLOAT* 	z = m->first;
+		clist*	l = m->second;
+		FAUSTFLOAT	v = *z;
+		for (clist::iterator c = l->begin(); c != l->end(); c++) {
+			if ((*c)->cache() != v) (*c)->reflectZone();
+		}
+	}
+}
+
+inline void GUI::addCallback(FAUSTFLOAT* zone, uiCallback foo, void* data) 
+{ 
+	new uiCallbackItem(this, zone, foo, data); 
+};
+
+inline clist::~clist() 
+{
+    std::list<uiItem*>::iterator it;
+    for (it = begin(); it != end(); it++) {
+        delete (*it);
+    }
+}
 
 #endif
 /************************************************************************
@@ -135,14 +313,15 @@ class UI;
 //----------------------------------------------------------------
 
 class dsp {
-
+ protected:
+	int fSamplingFreq;
  public:
 	dsp() {}
 	virtual ~dsp() {}
 
 	virtual int getNumInputs() 										= 0;
 	virtual int getNumOutputs() 									= 0;
-	virtual void buildUserInterface(UI* interface) 					= 0;
+	virtual void buildUserInterface(UI* ui_interface) 				= 0;
 	virtual void init(int samplingRate) 							= 0;
  	virtual void compute(int len, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 	= 0;
 };
@@ -182,6 +361,35 @@ class dsp {
  ************************************************************************
  ************************************************************************/
  
+#ifndef __misc__
+#define __misc__
+
+#include <algorithm>
+#include <map>
+#include <string.h>
+#include <stdlib.h>
+
+/************************************************************************
+ ************************************************************************
+    FAUST Architecture File
+	Copyright (C) 2003-2011 GRAME, Centre National de Creation Musicale
+    ---------------------------------------------------------------------
+    This Architecture section is free software; you can redistribute it
+    and/or modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 3 of
+	the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+	along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+ ************************************************************************
+ ************************************************************************/
+ 
 #ifndef __meta__
 #define __meta__
 
@@ -190,6 +398,45 @@ struct Meta
     virtual void declare(const char* key, const char* value) = 0;
 };
 
+#endif
+
+
+using std::fmax;
+using std::fmin;
+
+struct XXXX_Meta : std::map<const char*, const char*>
+{
+    void declare(const char* key, const char* value) { (*this)[key]=value; }
+};
+
+struct MY_Meta : Meta, std::map<const char*, const char*>
+{
+    void declare(const char* key, const char* value) { (*this)[key]=value; }
+};
+
+inline int	lsr(int x, int n)	{ return int(((unsigned int)x) >> n); }
+inline int 	int2pow2(int x)		{ int r=0; while ((1<<r)<x) r++; return r; }
+
+long lopt(char *argv[], const char *name, long def)
+{
+	int	i;
+	for (i = 0; argv[i]; i++) if (!strcmp(argv[i], name)) return atoi(argv[i+1]);
+	return def;
+}
+
+bool isopt(char *argv[], const char *name)
+{
+	int	i;
+	for (i = 0; argv[i]; i++) if (!strcmp(argv[i], name)) return true;
+	return false;
+}
+
+const char* lopts(char *argv[], const char *name, const char* def)
+{
+	int	i;
+	for (i = 0; argv[i]; i++) if (!strcmp(argv[i], name)) return argv[i+1];
+	return def;
+}
 #endif
 
 
@@ -218,227 +465,113 @@ struct Meta
 #define FAUSTFLOAT float
 #endif  
 
-#include <math.h>
-
-float sinf(float dummy0);
-
-class OscSIG0 {
-	
-  public:
-	
-	int iRec1[2];
-	
-  public:
-	
-	int getNumInputs() {
-		return 0;
-		
-	}
-	int getNumOutputs() {
-		return 1;
-		
-	}
-	int getInputRate(int channel) {
-		int rate;
-		switch (channel) {
-			default: {
-				rate = -1;
-				break;
-			}
-			
-		}
-		return rate;
-		
-	}
-	int getOutputRate(int channel) {
-		int rate;
-		switch (channel) {
-			case 0: {
-				rate = 0;
-				break;
-			}
-			default: {
-				rate = -1;
-				break;
-			}
-			
-		}
-		return rate;
-		
-	}
-	
-	void instanceInitOscSIG0(int samplingFreq) {
-		for (int i = 0; (i < 2); i = (i + 1)) {
-			iRec1[i] = 0;
-			
-		}
-		
-	}
-	
-	void fillOscSIG0(int count, float* output) {
-		for (int i = 0; (i < count); i = (i + 1)) {
-			iRec1[0] = (1 + iRec1[1]);
-			output[i] = sinf((9.58738e-05f * float((iRec1[0] - 1))));
-			iRec1[1] = iRec1[0];
-			
-		}
-		
-	}
-};
-
-OscSIG0* newOscSIG0() {return (OscSIG0*) new OscSIG0(); }
-void deleteOscSIG0(OscSIG0* dsp) {delete dsp; }
-
-float powf(float dummy0, float dummy1);
-static float ftbl0OscSIG0[65536];
-float floorf(float dummy0);
+typedef long double quad;
 
 #ifndef FAUSTCLASS 
 #define FAUSTCLASS Osc
 #endif
 
 class Osc : public dsp {
-	
   public:
-	
-	float fRec2[2];
-	float fRec0[2];
-	FAUSTFLOAT fhslider0;
-	int fSamplingFreq;
-	float fConst0;
-	FAUSTFLOAT fhslider1;
-	
+	class SIG0 {
+	  private:
+		int 	fSamplingFreq;
+		int 	iRec1[2];
+	  public:
+		int getNumInputs() 	{ return 0; }
+		int getNumOutputs() 	{ return 1; }
+		void init(int samplingFreq) {
+			fSamplingFreq = samplingFreq;
+			for (int i=0; i<2; i++) iRec1[i] = 0;
+		}
+		void fill (int count, float output[]) {
+			for (int i=0; i<count; i++) {
+				iRec1[0] = (1 + iRec1[1]);
+				output[i] = sinf((9.587379924285257e-05f * float((iRec1[0] - 1))));
+				// post processing
+				iRec1[1] = iRec1[0];
+			}
+		}
+	};
+
+
+	FAUSTFLOAT 	fslider0;
+	float 	fRec0[2];
+	static float 	ftbl0[65536];
+	float 	fConst0;
+	FAUSTFLOAT 	fslider1;
+	float 	fRec2[2];
   public:
-	
-	void static metadata(Meta* m) { 
-		m->declare("author", "Grame");
-		m->declare("copyright", "(c)GRAME 2009");
-		m->declare("license", "BSD");
-		m->declare("math.lib/author", "GRAME");
-		m->declare("math.lib/copyright", "GRAME");
-		m->declare("math.lib/license", "LGPL with exception");
-		m->declare("math.lib/name", "Math Library");
-		m->declare("math.lib/version", "1.0");
-		m->declare("music.lib/author", "GRAME");
-		m->declare("music.lib/copyright", "GRAME");
-		m->declare("music.lib/license", "LGPL with exception");
-		m->declare("music.lib/name", "Music Library");
-		m->declare("music.lib/version", "1.0");
+	static void metadata(Meta* m) 	{ 
 		m->declare("name", "osc");
 		m->declare("version", "1.0");
+		m->declare("author", "Grame");
+		m->declare("license", "BSD");
+		m->declare("copyright", "(c)GRAME 2009");
+		m->declare("music.lib/name", "Music Library");
+		m->declare("music.lib/author", "GRAME");
+		m->declare("music.lib/copyright", "GRAME");
+		m->declare("music.lib/version", "1.0");
+		m->declare("music.lib/license", "LGPL with exception");
+		m->declare("math.lib/name", "Math Library");
+		m->declare("math.lib/author", "GRAME");
+		m->declare("math.lib/copyright", "GRAME");
+		m->declare("math.lib/version", "1.0");
+		m->declare("math.lib/license", "LGPL with exception");
 	}
 
-	virtual int getNumInputs() {
-		return 0;
-		
-	}
-	virtual int getNumOutputs() {
-		return 1;
-		
-	}
-	virtual int getInputRate(int channel) {
-		int rate;
-		switch (channel) {
-			default: {
-				rate = -1;
-				break;
-			}
-			
-		}
-		return rate;
-		
-	}
-	virtual int getOutputRate(int channel) {
-		int rate;
-		switch (channel) {
-			case 0: {
-				rate = 1;
-				break;
-			}
-			default: {
-				rate = -1;
-				break;
-			}
-			
-		}
-		return rate;
-		
-	}
-	
+	virtual int getNumInputs() 	{ return 0; }
+	virtual int getNumOutputs() 	{ return 1; }
 	static void classInit(int samplingFreq) {
-		OscSIG0* sig0 = newOscSIG0();
-		sig0->instanceInitOscSIG0(samplingFreq);
-		sig0->fillOscSIG0(65536, ftbl0OscSIG0);
-		deleteOscSIG0(sig0);
-		
+		SIG0 sig0;
+		sig0.init(samplingFreq);
+		sig0.fill(65536,ftbl0);
 	}
-	
 	virtual void instanceInit(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
-		fhslider0 = FAUSTFLOAT(0.);
-		for (int i = 0; (i < 2); i = (i + 1)) {
-			fRec0[i] = 0.f;
-			
-		}
-		fConst0 = (1.f / float(fmin(192000, fmax(1, fSamplingFreq))));
-		fhslider1 = FAUSTFLOAT(220.);
-		for (int i = 0; (i < 2); i = (i + 1)) {
-			fRec2[i] = 0.f;
-			
-		}
-		
+		fslider0 = 0.0f;
+		for (int i=0; i<2; i++) fRec0[i] = 0;
+		fConst0 = (1.0f / float(fmin(192000, fmax(1, fSamplingFreq))));
+		fslider1 = 2.2e+02f;
+		for (int i=0; i<2; i++) fRec2[i] = 0;
 	}
-	
 	virtual void init(int samplingFreq) {
 		classInit(samplingFreq);
 		instanceInit(samplingFreq);
 	}
-	
 	virtual void buildUserInterface(UI* interface) {
 		interface->openVerticalBox("Oscillator");
-		interface->declare(&fhslider1, "unit", "Hz");
-		interface->addHorizontalSlider("freq", &fhslider1, 220.f, 20.f, 24000.f, 1.f);
-		interface->declare(&fhslider0, "unit", "dB");
-		interface->addHorizontalSlider("volume", &fhslider0, 0.f, -96.f, 0.f, 0.1f);
+		interface->declare(&fslider1, "unit", "Hz");
+		interface->addHorizontalSlider("freq", &fslider1, 2.2e+02f, 2e+01f, 2.4e+04f, 1.0f);
+		interface->declare(&fslider0, "unit", "dB");
+		interface->addHorizontalSlider("volume", &fslider0, 0.0f, -96.0f, 0.0f, 0.1f);
 		interface->closeBox();
-		
 	}
-	
-	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
-		FAUSTFLOAT* output0 = outputs[0];
-		float fSlow0 = (0.001f * powf(10.f, (0.05f * float(fhslider0))));
-		float fSlow1 = (fConst0 * float(fhslider1));
-		for (int i = 0; (i < count); i = (i + 1)) {
+	virtual void compute (int count, FAUSTFLOAT** input, FAUSTFLOAT** output) {
+		float 	fSlow0 = (0.0010000000000000009f * powf(10,(0.05f * float(fslider0))));
+		float 	fSlow1 = (fConst0 * float(fslider1));
+		FAUSTFLOAT* output0 = output[0];
+		for (int i=0; i<count; i++) {
 			fRec0[0] = ((0.999f * fRec0[1]) + fSlow0);
 			float fTemp0 = (fRec2[1] + fSlow1);
 			fRec2[0] = (fTemp0 - floorf(fTemp0));
-			output0[i] = FAUSTFLOAT((fRec0[0] * ftbl0OscSIG0[int((65536.f * fRec2[0]))]));
-			fRec0[1] = fRec0[0];
+			output0[i] = (FAUSTFLOAT)(fRec0[0] * ftbl0[int((65536.0f * fRec2[0]))]);
+			// post processing
 			fRec2[1] = fRec2[0];
-			
+			fRec0[1] = fRec0[0];
 		}
-		
 	}
-
-	
 };
 
 
+float 	Osc::ftbl0[65536];
 #ifdef FAUST_UIMACROS
 	#define FAUST_INPUTS 0
 	#define FAUST_OUTPUTS 1
-	#define FAUST_ACTIVES 0
+	#define FAUST_ACTIVES 2
 	#define FAUST_PASSIVES 0
-	FAUST_ADDHORIZONTALSLIDER("Oscillator/freq", fhslider1, 2.2e+02f, 2e+01f, 2.4e+04f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("Oscillator/volume", fhslider0, 0.0f, -96.0f, 0.0f, 0.1f);
-#endif
-
-int main(int argc, char *argv[])
-{
-	Osc DSP;
-}
-
-
+	FAUST_ADDHORIZONTALSLIDER("Oscillator/freq", fslider1, 2.2e+02f, 2e+01f, 2.4e+04f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("Oscillator/volume", fslider0, 0.0f, -96.0f, 0.0f, 0.1f);
 #endif
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
