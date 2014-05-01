@@ -68,12 +68,12 @@
 
     // Connect to another node
     that.connect = function (node) {
-      if (node.jsNode)
+      if (node.scriptProcessor)
       {
-        that.jsNode.connect(node.jsNode);
+        that.scriptProcessor.connect(node.scriptProcessor);
       }
       else {
-        that.jsNode.connect(node);
+        that.scriptProcessor.connect(node);
       }
       return that;
     };
@@ -81,13 +81,13 @@
     // Bind to Web Audio
 
     that.play = function () {
-      that.jsNode.connect(faust.context.destination);
+      that.scriptProcessor.connect(faust.context.destination);
       that.model.playing = true;
       return that;
     };
 
     that.pause = function () {
-      that.jsNode.disconnect(faust.context.destination);
+      that.scriptProcessor.disconnect(faust.context.destination);
       that.model.playing = false;
       return that;
     };
@@ -131,8 +131,8 @@
       that.numOut = that.getNumOutputs();
 
       // Setup web audio context
-      that.jsNode = faust.context.createScriptProcessor(that.vectorsize, that.numIn, that.numOut);
-      that.jsNode.onaudioprocess = that.compute;
+      that.scriptProcessor = faust.context.createScriptProcessor(that.vectorsize, that.numIn, that.numOut);
+      that.scriptProcessor.onaudioprocess = that.compute;
 
       // TODO the below calls to malloc are not yet being freed, potential memory leak
       // allocate memory for input / output arrays
