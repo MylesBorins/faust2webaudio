@@ -17,6 +17,10 @@ licenses are at the root directory.
 
 var faust = faust || {};
 
+if (window.AudioContext === undefined) {
+  window.AudioContext = window.webkitAudioContext;
+}
+
 (function () {
 
 // The Module object: Our interface to the outside world. We import
@@ -8923,7 +8927,7 @@ run();
 
   if (!faust.context)
   {
-    faust.context = new webkitAudioContext();
+    faust.context = new AudioContext();
   }
 
   var NOISE_constructor = Module.cwrap('NOISE_constructor', 'number', 'number');
@@ -9051,7 +9055,7 @@ run();
       that.numOut = that.getNumOutputs();
 
       // Setup web audio context
-      that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
+      that.jsNode = faust.context.createScriptProcessor(that.vectorsize, that.numIn, that.numOut);
       that.jsNode.onaudioprocess = that.compute;
 
       // TODO the below calls to malloc are not yet being freed, potential memory leak
