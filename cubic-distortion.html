@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>FAUST CUBIC DISTORTION</title>
+      <!-- I am so Meta -->
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="FAUST NOISE">
+      <meta name="author" content="Myles Borins">
+      <!-- OpenGraph Meta -->
+      <meta property="og:title" content="FAUST NOISE"/>
+      <!-- <meta property="og:url" content=""/> -->
+      <meta property="og:site_name" content="FAUST NOISE"/>
+      <!-- <meta property="og:image" content="Some Image"/> -->
+      <link href="css/custom.css" rel="stylesheet">
+    </head>
+
+    <body>
+    
+    <div class="center">
+    	<h1>Cube that distortion!!!<h1>
+    </div>
+
+    <script src="js/faust-cubicDistortion.js"></script>
+    <script>
+      var cubicDistortion = faust.cubicDistortion();
+      cubicDistortion.update("Volume", 0.1);
+      cubicDistortion.play();
+    </script>
+    </body>
+
+</html>
