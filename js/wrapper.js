@@ -3,7 +3,7 @@
 
   if (!faust.context)
   {
-    faust.context = new webkitAudioContext();
+    faust.context = new AudioContext();
   }
 
   var DSP_constructor = Module.cwrap('DSP_constructor', 'number', 'number');
@@ -131,7 +131,7 @@
       that.numOut = that.getNumOutputs();
 
       // Setup web audio context
-      that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
+      that.jsNode = faust.context.createScriptProcessor(that.vectorsize, that.numIn, that.numOut);
       that.jsNode.onaudioprocess = that.compute;
 
       // TODO the below calls to malloc are not yet being freed, potential memory leak
