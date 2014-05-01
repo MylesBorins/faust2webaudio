@@ -8964,7 +8964,7 @@ run();
     that.getNumOutputs = function () {
       return OSC_getNumOutputs(that.ptr);
     };
-    
+
     that.compute = function (e) {
       var oscOutChans = HEAP32.subarray(that.outs >> 2, (that.outs + that.numOut * that.ptrsize) >> 2);
       var oscInChans = HEAP32.subarray(that.ins >> 2, (that.ins + that.ins * that.ptrsize) >> 2);
@@ -8973,19 +8973,19 @@ run();
       {
         var input = e.inputBuffer.getChannelData(i);
         var oscInput = HEAPF32.subarray(oscInChans[i] >> 2, (oscInChans[i] + that.vectorsize * that.ptrsize) >> 2);
-        
+
         for (j = 0; j < input.length; j++) {
           oscInput[j] = input[j];
         }
       }
-      
+
       OSC_compute(that.ptr, that.vectorsize, that.ins, that.outs);
-      
+
       for (i = 0; i < that.numOut; i++)
       {
         var output = e.outputBuffer.getChannelData(i);
         var oscOutput = HEAPF32.subarray(oscOutChans[i] >> 2, (oscOutChans[i] + that.vectorsize * that.ptrsize) >> 2);
-        
+
         for (j = 0; j < output.length; j++) {
           output[j] = oscOutput[j];
         }
@@ -8997,7 +8997,7 @@ run();
       OSC_destructor(that.ptr);
       return that;
     };
-    
+
     // Connect to another node
     that.connect = function (node) {
       if (node.jsNode)
@@ -9023,7 +9023,7 @@ run();
       that.model.playing = false;
       return that;
     };
-    
+
     that.toggle = function() {
       if (that.model.playing) {
         that.pause()
@@ -9046,7 +9046,7 @@ run();
       }
       return that;
     };
-    
+
     that.update = function (key, val) {
       HEAPF32[that.model[key] >> 2] = val;
       return that;
@@ -9057,33 +9057,38 @@ run();
       that.ptrsize = 4; //assuming poitner in emscripten are 32bits
       that.vectorsize = 2048;
       that.samplesize = 4;
-      
+
       // Get input / output counts
       that.numIn = that.getNumInputs();
       that.numOut = that.getNumOutputs();
-      
+
       // Setup web audio context
       that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
       that.jsNode.onaudioprocess = that.compute;
-      
+
       // TODO the below calls to malloc are not yet being freed, potential memory leak
       // allocate memory for input / output arrays
       that.ins = Module._malloc(that.ptrsize * that.numIn);
-      
-      for (i = 0; i < that.numIn; i++) { // assing to our array of pointer elements an array of 32bit floats, one for each channel. currently we assume pointers are 32bits
-        HEAP32[(that.ins >> 2) + i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+
+      // assign to our array of pointer elements an array of 32bit floats, one for each channel. currently we assume pointers are 32bits
+      for (i = 0; i < that.numIn; i++) { 
+        // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+        HEAP32[(that.ins >> 2) + i] = Module._malloc(that.vectorsize * that.samplesize); 
       }
-      
-      that.outs = Module._malloc(that.ptrsize * that.numOut); //ptrsize, change to eight or use Runtime.QUANTUM? or what?
-      for (i = 0; i < that.numOut; i++) { // assing to our array of pointer elements an array of 64bit floats, one for each channel. currently we assume pointers are 32bits
-        HEAP32[(that.outs >> 2) + i] = Module._malloc(that.vectorsize * that.samplesize); // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+
+      //ptrsize, change to eight or use Runtime.QUANTUM? or what?
+      that.outs = Module._malloc(that.ptrsize * that.numOut); 
+
+      // assign to our array of pointer elements an array of 64bit floats, one for each channel. currently we assume pointers are 32bits
+      for (i = 0; i < that.numOut; i++) { 
+        // assign memory at that.ins[i] to a new ptr value. maybe there's an easier way, but this is clearer to me than any typedarray magic beyond the presumably TypedArray HEAP32
+        HEAP32[(that.outs >> 2) + i] = Module._malloc(that.vectorsize * that.samplesize);
       }
       that.setupModel();
       return that;
     };
 
     that.init();
-    
 
     return that;
   };
