@@ -4,9 +4,7 @@
 # Adapted From https://gist.github.com/camupod/5640386
 set -e
 echo 'Compiling From Faust -> CPP'
-faust -a minimal.cpp -i -uim -cn Freeverb  dsp/freeverb.dsp -o cpp/faust-freeverb-temp.cpp
-sed -e "s/max/fmax/g" -e "s/min/fmin/g" cpp/faust-freeverb-temp.cpp > cpp/faust-freeverb.cpp
-rm cpp/faust-freeverb-temp.cpp
+faust -a minimal.cpp -i -uim -cn Freeverb  dsp/freeverb.dsp -o cpp/faust-freeverb.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping dat cpp"
 sed -e "s/DSP/FREEVERB/g" -e "s/Dsp/Freeverb/g" -e "s/dsp/freeverb/g" cpp/faust-wrapper.cpp >> cpp/faust-freeverb.cpp

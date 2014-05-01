@@ -4,9 +4,7 @@
 # Adapted From https://gist.github.com/camupod/5640386
 set -e
 echo 'Compiling From Faust -> CPP'
-faust -a minimal.cpp -i -uim -cn Osc  dsp/osc.dsp -o cpp/faust-osc-temp.cpp
-sed -e "s/max/fmax/g" -e "s/min/fmin/g" cpp/faust-osc-temp.cpp > cpp/faust-osc.cpp
-rm cpp/faust-osc-temp.cpp
+faust -a minimal.cpp -i -uim -cn Osc  dsp/osc.dsp -o cpp/faust-osc.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping dat cpp"
 sed -e "s/DSP/OSC/g" -e "s/Dsp/Osc/g" -e "s/dsp/osc/g" cpp/faust-wrapper.cpp >> cpp/faust-osc.cpp

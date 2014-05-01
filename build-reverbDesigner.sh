@@ -4,9 +4,7 @@
 # Adapted From https://gist.github.com/camupod/5640386
 set -e
 echo 'Compiling From Faust -> CPP'
-faust -a minimal.cpp -i -uim -cn ReverbDesigner  dsp/reverbDesigner.dsp -o cpp/faust-reverbDesigner-temp.cpp
-sed -e "s/max/fmax/g" -e "s/min/fmin/g" cpp/faust-reverbDesigner-temp.cpp > cpp/faust-reverbDesigner.cpp
-rm cpp/faust-reverbDesigner-temp.cpp
+faust -a minimal.cpp -i -uim -cn ReverbDesigner  dsp/reverbDesigner.dsp -o cpp/faust-reverbDesigner.cpp
 echo " $(tput setaf 2)Complete$(tput sgr0)"
 echo "Wrapping dat cpp"
 sed -e "s/DSP/REVERBDESIGNER/g" -e "s/Dsp/ReverbDesigner/g" -e "s/dsp/reverbDesigner/g" cpp/faust-wrapper.cpp >> cpp/faust-reverbDesigner.cpp
