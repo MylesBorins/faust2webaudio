@@ -5,12 +5,12 @@
       <!-- I am so Meta -->
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="description" content="FAUST NOISE">
+      <meta name="description" content="FAUST cubicDistortion">
       <meta name="author" content="Myles Borins">
       <!-- OpenGraph Meta -->
-      <meta property="og:title" content="FAUST NOISE"/>
+      <meta property="og:title" content="FAUST cubicDistortion"/>
       <!-- <meta property="og:url" content=""/> -->
-      <meta property="og:site_name" content="FAUST NOISE"/>
+      <meta property="og:site_name" content="FAUST cubicDistortion"/>
       <!-- <meta property="og:image" content="Some Image"/> -->
       <link href="css/custom.css" rel="stylesheet">
     </head>
@@ -21,11 +21,31 @@
     	<h1>Cube that distortion!!!<h1>
     </div>
 
+    <script src="bower_components/lodash/dist/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/faust-cubicDistortion.js"></script>
     <script>
       var cubicDistortion = faust.cubicDistortion();
-      cubicDistortion.update("Volume", 0.1);
+      cubicDistortion.update('Amplitude', 0.3);
       cubicDistortion.play();
+      window.onload = function () {
+        var folder, param;
+        var gui = new dat.GUI();
+        _(cubicDistortion.model).forEach(function (obj, key) {
+          if (key !== 'playing') {
+            folder = gui.addFolder(key);
+            if (key === 'Volume' || key === 'Amplitude') {
+              param = folder.add(obj, 'value', 0, 1);
+            }
+            else {
+              param = folder.add(obj, 'value');
+            }
+            param.onChange(function (value) {
+              cubicDistortion.update(key, value);
+            });
+          } 
+        });
+      }
     </script>
     </body>
 

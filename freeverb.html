@@ -21,10 +21,10 @@
     	<h1>FREEVERB<h1>
     </div>
     
-    
+    <script src="bower_components/lodash/dist/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/faust-noise.js"></script>
     <script src="js/faust-freeverb.js"></script>
-    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
 
     <script>
     
@@ -38,12 +38,37 @@
     freeverb.play();
 
     window.onload = function () {
-      
-      var gui= new dat.GUI();
-      var wetFolder = gui.addFolder('Wet');
-      var wet = wetFolder.add(freeverb.model.Wet, 'value', 0., 1.);
-      wet.onChange(function (value) {
-        freeverb.update('Wet', value);
+      var folder, param;
+      var gui = new dat.GUI();
+      var outerfolder = gui.addFolder('Noise');
+      _(noise.model).forEach(function (obj, key) {
+        if (key !== 'playing') {
+          folder = outerfolder.addFolder(key);
+          if (key === 'Volume' || key === 'Amplitude') {
+            param = folder.add(obj, 'value', 0, 1);
+          }
+          else {
+            param = folder.add(obj, 'value');
+          }
+          param.onChange(function (value) {
+            noise.update(key, value);
+          });
+        } 
+      });
+      outerfolder = gui.addFolder('FreeVerb');
+      _(freeverb.model).forEach(function (obj, key) {
+        if (key !== 'playing') {
+          folder = outerfolder.addFolder(key);
+          if (key === 'Volume' || key === 'Amplitude') {
+            param = folder.add(obj, 'value', 0, 1);
+          }
+          else {
+            param = folder.add(obj, 'value');
+          }
+          param.onChange(function (value) {
+            freeverb.update(key, value);
+          });
+        } 
       });
     }
 
