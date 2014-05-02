@@ -18,9 +18,7 @@ licenses are at the root directory.
 var faust = faust || {};
 
 // Shim AudioConext on webkit
-if (window.AudioContext === undefined) {
-  window.AudioContext = window.webkitAudioContext;
-}
+window.AudioContext = window.AudioContext || window.webkitAudioContext || undefined;
 
 (function () {
 
