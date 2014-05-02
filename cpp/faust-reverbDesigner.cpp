@@ -1834,13 +1834,13 @@ class ReverbDesigner : public dsp {
 			float fTemp32 = (fSlow36 * fRec63[1]);
 			fRec63[0] = ((fRec64[2] + (fSlow27 * (fTemp31 + (fSlow30 * fRec64[0])))) - (fSlow33 * ((fSlow34 * fRec63[2]) + fTemp32)));
 			float fTemp33 = (fSlow41 * fRec62[1]);
-			fRec62[0] = ((fRec63[2] + (fSlow33 * (fTemp32 + (fSlow34 * fRec63[0])))) - (fSlow39 * ((fSlow42 * fRec62[2]) + fTemp33)));
+			fRec62[0] = ((fRec63[2] + (fSlow33 * (fTemp32 + (fSlow34 * fRec63[0])))) - (fSlow39 * (fTemp33 + (fSlow42 * fRec62[2]))));
 			fRec72[0] = ((fSlow19 * fRec72[1]) + (fSlow20 * (fRec4[1] + fRec4[2])));
 			fRec71[0] = (fRec72[0] - (fSlow16 * ((fSlow22 * fRec71[2]) + (fSlow23 * fRec71[1]))));
 			float fTemp34 = (fRec71[2] + (fRec71[0] + (2 * fRec71[1])));
 			float fTemp35 = (fSlow16 * fTemp34);
 			fVec8[0] = fTemp35;
-			fRec70[0] = ((fSlow48 * fRec70[1]) + (fSlow49 * ((fSlow50 * fVec8[1]) + (fSlow51 * fTemp34))));
+			fRec70[0] = ((fSlow48 * fRec70[1]) + (fSlow49 * ((fSlow51 * fTemp34) + (fSlow50 * fVec8[1]))));
 			fRec69[0] = (fRec70[0] - (fSlow46 * ((fSlow52 * fRec69[2]) + (fSlow29 * fRec69[1]))));
 			float fTemp36 = (fSlow36 * fRec68[1]);
 			fRec68[0] = ((fSlow46 * (((fSlow28 * fRec69[0]) + (fSlow53 * fRec69[1])) + (fSlow28 * fRec69[2]))) - (fSlow33 * ((fSlow34 * fRec68[2]) + fTemp36)));
@@ -1851,7 +1851,7 @@ class ReverbDesigner : public dsp {
 			float fTemp38 = (fRec76[2] + (fRec76[0] + (2 * fRec76[1])));
 			float fTemp39 = (fSlow46 * fTemp38);
 			fVec9[0] = fTemp39;
-			fRec75[0] = ((fSlow59 * fRec75[1]) + (fSlow60 * ((fSlow61 * fVec9[1]) + (fSlow62 * fTemp38))));
+			fRec75[0] = ((fSlow59 * fRec75[1]) + (fSlow60 * ((fSlow62 * fTemp38) + (fSlow61 * fVec9[1]))));
 			fRec74[0] = (fRec75[0] - (fSlow57 * ((fSlow63 * fRec74[2]) + (fSlow36 * fRec74[1]))));
 			float fTemp40 = (fSlow41 * fRec73[1]);
 			fRec73[0] = ((fSlow57 * (((fSlow35 * fRec74[0]) + (fSlow64 * fRec74[1])) + (fSlow35 * fRec74[2]))) - (fSlow39 * ((fSlow42 * fRec73[2]) + fTemp40)));
@@ -2132,7 +2132,7 @@ class ReverbDesigner : public dsp {
 			float fTemp138 = (fRec234[2] + (fRec234[0] + (2 * fRec234[1])));
 			float fTemp139 = (fSlow57 * fTemp138);
 			fVec31[0] = fTemp139;
-			fRec233[0] = ((fSlow69 * fRec233[1]) + (fSlow70 * ((fSlow72 * fTemp138) + (fSlow71 * fVec31[1]))));
+			fRec233[0] = ((fSlow69 * fRec233[1]) + (fSlow70 * ((fSlow71 * fVec31[1]) + (fSlow72 * fTemp138))));
 			fRec232[0] = (fRec233[0] - (fSlow65 * ((fSlow73 * fRec232[2]) + (fSlow41 * fRec232[1]))));
 			fRec237[0] = ((fSlow69 * fRec237[1]) + (fSlow70 * (fVec31[0] + fVec31[1])));
 			fRec236[0] = (fRec237[0] - (fSlow65 * ((fSlow73 * fRec236[2]) + (fSlow41 * fRec236[1]))));
@@ -2189,7 +2189,7 @@ class ReverbDesigner : public dsp {
 			float fTemp158 = (fRec269[2] + (fRec269[0] + (2 * fRec269[1])));
 			float fTemp159 = (fSlow16 * fTemp158);
 			fVec35[0] = fTemp159;
-			fRec268[0] = ((fSlow48 * fRec268[1]) + (fSlow49 * ((fSlow51 * fTemp158) + (fSlow50 * fVec35[1]))));
+			fRec268[0] = ((fSlow48 * fRec268[1]) + (fSlow49 * ((fSlow50 * fVec35[1]) + (fSlow51 * fTemp158))));
 			fRec267[0] = (fRec268[0] - (fSlow46 * ((fSlow52 * fRec267[2]) + (fSlow29 * fRec267[1]))));
 			float fTemp160 = (fSlow36 * fRec266[1]);
 			fRec266[0] = ((fSlow46 * (((fSlow28 * fRec267[0]) + (fSlow53 * fRec267[1])) + (fSlow28 * fRec267[2]))) - (fSlow33 * ((fSlow34 * fRec266[2]) + fTemp160)));
@@ -2200,7 +2200,7 @@ class ReverbDesigner : public dsp {
 			float fTemp162 = (fRec274[2] + (fRec274[0] + (2 * fRec274[1])));
 			float fTemp163 = (fSlow46 * fTemp162);
 			fVec36[0] = fTemp163;
-			fRec273[0] = ((fSlow59 * fRec273[1]) + (fSlow60 * ((fSlow62 * fTemp162) + (fSlow61 * fVec36[1]))));
+			fRec273[0] = ((fSlow59 * fRec273[1]) + (fSlow60 * ((fSlow61 * fVec36[1]) + (fSlow62 * fTemp162))));
 			fRec272[0] = (fRec273[0] - (fSlow57 * ((fSlow63 * fRec272[2]) + (fSlow36 * fRec272[1]))));
 			float fTemp164 = (fSlow41 * fRec271[1]);
 			fRec271[0] = ((fSlow57 * (((fSlow35 * fRec272[0]) + (fSlow64 * fRec272[1])) + (fSlow35 * fRec272[2]))) - (fSlow39 * ((fSlow42 * fRec271[2]) + fTemp164)));

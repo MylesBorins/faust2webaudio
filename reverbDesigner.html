@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>FAUST NOISE</title>
+      <title>FAUST Reverb Designer</title>
       <!-- I am so Meta -->
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,24 +21,40 @@
     	<h1>Rev?<h1>
     </div>
 
+    <script src="bower_components/lodash/dist/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/faust-reverbDesigner.js"></script>
     <script>
       var rev = faust.reverbDesigner();
-      rev.update("Band 0 u", 3015);
-      rev.update("Band 1 u", 2361);
-      rev.update("Band 2 u", 1155);
-      rev.update("Band 3 u", 3015);
+      rev.update("Band 0 upper edge in Hz", 3015);
+      rev.update("Band 1 upper edge in Hz", 2361);
+      rev.update("Band 2 upper edge in Hz", 1155);
+      rev.update("Band 3 upper edge in Hz", 3015);
       rev.update("0", 2.6);
       rev.update("1", 3.4);
       rev.update("2", 2.7);
       rev.update("3", 3.5);
       rev.update("4", 4.0);
-      rev.update("Mute Ext", 1);
-      rev.update("Pink Noi", 1);
-      rev.update("fmax aco", 9.3);
-      rev.update("fmin aco", 1.7);
-      rev.update("Output L", -8.7);
+      rev.update("Mute Ext Inputs", 1);
+      rev.update("Pink Noise", 1);
+      rev.update("max acoustic ray length", 9.3);
+      rev.update("min acoustic ray length", 1.7);
+      rev.update("Output Level (dB)", -8.7);
       rev.play()
+      
+      window.onload = function () {
+      
+        var gui= new dat.GUI();
+        _(rev.model).forEach(function (obj, key) {
+          if (key !== 'playing') {
+            var folder = gui.addFolder(key);
+            var param = folder.add(obj, 'value');
+            param.onChange(function (value) {
+              rev.update(key, value);
+            });
+          } 
+        });
+      }
     </script>
     </body>
 
