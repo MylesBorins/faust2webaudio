@@ -21,6 +21,7 @@
     	<h1>SINE<h1>
     </div>
 
+    <script src="bower_components/lodash/dist/lodash.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/faust-osc.js"></script>
     <script>
@@ -30,11 +31,20 @@
       window.onload = function () {
       
         var gui= new dat.GUI();
-        var freqFolder = gui.addFolder('Frequency');
-        var freq = freqFolder.add(osc.model.freq, 'value', 20., 5000.);
-        freq.onChange(function (value) {
-          osc.update('freq', value);
+        _(osc.model).forEach(function (obj, key) {
+          if (key !== 'playing') {
+            var folder = gui.addFolder(key);
+            var param = folder.add(obj, 'value');
+            param.onChange(function (value) {
+              osc.update(key, value);
+            });
+          } 
         });
+        // var freqFolder = gui.addFolder('Frequency');
+        // var freq = freqFolder.add(osc.model.freq, 'value', 20., 5000.);
+        // freq.onChange(function (value) {
+        //   osc.update('freq', value);
+        // });
       }
     </script>
     </body>
