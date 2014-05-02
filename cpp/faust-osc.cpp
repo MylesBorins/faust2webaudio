@@ -15,7 +15,7 @@
 	Copyright (C) 2003-2011 GRAME, Centre National de Creation Musicale
     ---------------------------------------------------------------------
 
-	This is sample code. This file is provided as an example of fminimal
+	This is sample code. This file is provided as an example of minimal
 	FAUST architecture file. Redistribution and use in source and binary
 	forms, with or without modification, in part or in full are permitted.
 	In particular you can create a derived work of this FAUST architecture
@@ -65,14 +65,14 @@ class UI
 
     virtual void addButton(const char* label, FAUSTFLOAT* zone) = 0;
     virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) = 0;
-    virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step) = 0;
-    virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step) = 0;
-    virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step) = 0;
+    virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) = 0;
+    virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) = 0;
+    virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) = 0;
 
     // -- passive widgets
 
-    virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT fmin, FAUSTFLOAT fmax) = 0;
-    virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT fmin, FAUSTFLOAT fmax) = 0;
+    virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) = 0;
+    virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) = 0;
 
 	// -- metadata declarations
 
@@ -329,7 +329,7 @@ class dsp {
 // On Intel set FZ (Flush to Zero) and DAZ (Denormals Are Zero)
 // flags to avoid costly denormals
 #ifdef __SSE__
-    #include <xmfmintrin.h>
+    #include <xmmintrin.h>
     #ifdef __SSE2__
         #define AVOIDDENORMALS _mm_setcsr(_mm_getcsr() | 0x8040)
     #else
@@ -401,8 +401,8 @@ struct Meta
 #endif
 
 
-using std::fmax;
-using std::fmin;
+using std::max;
+using std::min;
 
 struct XXXX_Meta : std::map<const char*, const char*>
 {
@@ -531,7 +531,7 @@ class Osc : public dsp {
 		fSamplingFreq = samplingFreq;
 		fslider0 = 0.0f;
 		for (int i=0; i<2; i++) fRec0[i] = 0;
-		fConst0 = (1.0f / float(fmin(192000, fmax(1, fSamplingFreq))));
+		fConst0 = (1.0f / float(min(192000, max(1, fSamplingFreq))));
 		fslider1 = 2.2e+02f;
 		for (int i=0; i<2; i++) fRec2[i] = 0;
 	}

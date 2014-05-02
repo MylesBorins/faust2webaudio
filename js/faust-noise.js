@@ -18,9 +18,7 @@ licenses are at the root directory.
 var faust = faust || {};
 
 // Shim AudioConext on webkit
-if (window.AudioContext === undefined) {
-  window.AudioContext = window.webkitAudioContext;
-}
+window.AudioContext = window.AudioContext || window.webkitAudioContext || undefined;
 
 (function () {
 
@@ -9035,19 +9033,23 @@ run();
         var keyPtr = allocate(intArrayFromString(''), 'i8', ALLOC_STACK);
         var valPtr = NOISE_getNextParam(that.ptr, keyPtr);
         var key = Pointer_stringify(keyPtr);
-        that.model[key] = valPtr;
+        that.model[key] = {
+          value: HEAPF32[valPtr >> 2],
+          pointer: valPtr
+        };
       }
       return that;
     };
 
     that.update = function (key, val) {
-      HEAPF32[that.model[key] >> 2] = val;
+      that.model[key].value = val;
+      HEAPF32[that.model[key].pointer >> 2] = val;
       return that;
     };
 
     that.init = function () {
       var i;
-      that.ptrsize = 4; //assuming poitner in emscripten are 32bits
+      that.ptrsize = 4; //assuming pointer in emscripten are 32bits
       that.vectorsize = 2048;
       that.samplesize = 4;
 
