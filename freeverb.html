@@ -20,17 +20,32 @@
     <div class="center">
     	<h1>FREEVERB<h1>
     </div>
+    
+    
     <script src="js/faust-noise.js"></script>
     <script src="js/faust-freeverb.js"></script>
+    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
+
     <script>
+    
     var noise = faust.noise();
     var freeverb = faust.freeverb();
     noise.connect(freeverb);
     noise.update("Volume", 0.1);
     freeverb.update("Damp", 0.75);
-    freeverb.update("RoomSiz", 0.75);
+    freeverb.update("RoomSize", 0.75);
     freeverb.update("Wet", 0.75);
     freeverb.play();
+
+    window.onload = function () {
+      
+      var gui= new dat.GUI();
+      var wetFolder = gui.addFolder('Wet');
+      var wet = wetFolder.add(freeverb.model.Wet, 'value', 0., 1.);
+      wet.onChange(function (value) {
+        freeverb.update('Wet', value);
+      });
+    }
 
     </script>
     </body>

@@ -21,10 +21,21 @@
     	<h1>SINE<h1>
     </div>
 
+    <script src="bower_components/dat-gui/build/dat.gui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/faust-osc.js"></script>
     <script>
       var osc = faust.osc();
       osc.play();
+      
+      window.onload = function () {
+      
+        var gui= new dat.GUI();
+        var freqFolder = gui.addFolder('Frequency');
+        var freq = freqFolder.add(osc.model.freq, 'value', 20., 5000.);
+        freq.onChange(function (value) {
+          osc.update('freq', value);
+        });
+      }
     </script>
     </body>
 
