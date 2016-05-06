@@ -1,0 +1,39 @@
+{
+  "name": "faust2webaudio",
+  "version": "0.1.0",
+  "description": "Compilation toolchain to go from Faust -> Webaudio",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheAlphaNerd/faust2webaudio.git"
+  },
+  "keywords": [
+    "Faust",
+    "Webaudio"
+  ],
+  "author": "Myles Borins",
+  "license": "MIT / GPL",
+  "bugs": {
+    "url": "https://github.com/TheAlphaNerd/faust2webaudio/issues"
+  },
+  "homepage": "https://github.com/TheAlphaNerd/faust2webaudio",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-connect": "^0.7.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-htmlmin": "^0.2.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-rev": "^0.1.0",
+    "grunt-shell": "^0.7.0",
+    "grunt-usemin": "^2.1.1",
+    "load-grunt-config": "^0.8.0",
+    "time-grunt": "^0.3.1"
+  }
+}
