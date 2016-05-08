@@ -1,0 +1,22 @@
+{
+  "name": "faust2webaudio",
+  "version": "0.1.0",
+  "homepage": "https://github.com/TheAlphaNerd/faust2webaudio",
+  "authors": [
+    "Myles Borins <mborins@ccrma.stanford.edu>"
+  ],
+  "description": "faust in the browser",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dat-gui": "~0.5.0",
+    "lodash": "~2.4.1"
+  }
+}
